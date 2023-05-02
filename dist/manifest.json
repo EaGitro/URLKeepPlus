@@ -1,0 +1,10 @@
+{
+    "manifest_version": 3,
+    "name": "URL Arranger",
+    "version": "1.0.0.1",
+    "description": "an Extension for Google Chrome. Saving URLs and Managing, Arranging them.",
+    "permissions": ["storage","tabs","scripting"],
+    "background": {"service_worker": "background.js"},
+    "options_page": "options.html",
+    "action": {}
+}
