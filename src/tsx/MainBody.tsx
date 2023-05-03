@@ -8,18 +8,29 @@ import SideMenu from './MainBody/SideMenu';
 import MainPanel from './MainBody/MainPanel'
 import SubPanel from './MainBody/SubPanel'
 
+// import {CssHeight} from '../tsTypes/styleTypes'
 
-export default function MainBody() {
+import {CssHeight, CssStyle} from '../tsTypes/styleTypes'
+
+import objToClassname from '../utilities/objToClassname';
+
+
+type Props = {
+    cssStyle: CssStyle;
+}
+
+
+export default function MainBody(props: Props) {
     return (
-        <div className='h-90'>
-            <Container fluid>
-                <Row>
+        <div className={objToClassname(props.cssStyle)}>
+            <Container fluid className='h-100'>
+                <Row className='h-100'>
                     <Col xs={"3"}>
-                        <SideMenu></SideMenu>
+                        <SideMenu/>
                     </Col>
                     <Col xs={"9"}>
-                        <MainPanel></MainPanel>
-                        <SubPanel></SubPanel>
+                        <MainPanel/>
+                        <SubPanel/>
                     </Col>
                 </Row>
             </Container>

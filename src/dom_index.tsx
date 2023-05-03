@@ -7,7 +7,9 @@ import Button from 'react-bootstrap/Button';
 import Head from './tsx/Head';
 import MainBody from './tsx/MainBody'
 
+// import {CssHeight} from '../tsTypes/styleTypes'
 
+// About CSS style and types, see  ../tsTypes/styleTypes or ~/dist/style/
 
 function clickEvent(){
     console.log("clicked");
@@ -15,9 +17,13 @@ function clickEvent(){
 
 const element = (
     <div className='h-100'>
-        <Head/>
-        <MainBody/>
+        <Head cssStyle={{height: 'h-10'}} />
+        <MainBody cssStyle={{height: 'h-90', width:'w-15'}}/>
     </div>
 );
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(element);
+
+
+
+

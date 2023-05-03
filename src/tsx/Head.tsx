@@ -1,7 +1,14 @@
 import React from 'react';
 
-export default function Head(){
+import {CssHeight, CssStyle} from '../tsTypes/styleTypes'
+
+
+type Props = {
+    cssStyle: CssStyle;
+}
+
+export default function Head(props: Props){
     return(
-        <div className='h-10'>Head</div>
+        <div className={props.cssStyle.height}>Head</div>
     )
 }
