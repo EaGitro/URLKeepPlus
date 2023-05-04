@@ -5,11 +5,11 @@
 
 
 
-type AnyObj = {
-    [K: string]: any;
-}
+
 
 export default function objToClassname(param: AnyObj) {
+    
+
     let result: string = "";
     let tmp = Object.values(param);
     // console.log("tmp", tmp)
@@ -52,3 +52,6 @@ export default function objToClassname(param: AnyObj) {
     return result;
 }
 
+type AnyObj = {
+    [K: string]: any;
+}

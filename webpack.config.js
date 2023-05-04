@@ -29,6 +29,13 @@ module.exports = {
       },
     ],
   },
+  resolve:{
+    alias:{
+      "~/src": path.resolve(__dirname, 'src/'),
+      "~": path.resolve(__dirname)
+    }
+  },
+
   target: ["web", "es2021"],            /* どの環境に対してコンパイルするか. 今回はchrome用なので es2021 */
 
   resolve: {    /*ERROR:  Field 'browser' doesn't contain a valid alias configuration を解決 */

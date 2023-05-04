@@ -29,7 +29,7 @@ export default function MainBody(props: Props) {
                         <SideMenu/>
                     </Col>
                     <Col xs={"9"}>
-                        <MainPanel/>
+                        <MainPanel cssStyle={{height: 'h-70'}}/>
                         <SubPanel/>
                     </Col>
                 </Row>
