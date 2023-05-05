@@ -2,8 +2,11 @@
 // Type definitioins for style
 
 
+/**
+ * CSS
+ */
 
-
+// height
 export type CssHeight = 'h-5'
     | 'h-10'
     | 'h-15'
@@ -25,6 +28,7 @@ export type CssHeight = 'h-5'
     | 'h-95'
     | 'h-100';
 
+// width
 export type CssWidth = 'w-5'
     | 'w-15'
     | 'w-20'
@@ -45,7 +49,12 @@ export type CssWidth = 'w-5'
     | 'w-95'
     | 'w-100';
 
+/**
+ * Bootstrap
+ */
 
+
+// reuse utilities
 type BootstrapThemeColors = 'primary' // blue 
     | 'secondary'   // gray
     | 'success'     // green
@@ -61,13 +70,21 @@ type BootstrapPositions = 'top'  // top
     | 'start'      // left
 
 
-
-
-export type BootstrapBorder = 'border'
+// border
+type BootstrapBorderDirection = 'border'
     | `border-${BootstrapPositions}`            /* positions */
-    | `border border-${BootstrapThemeColors}`   /* colors */
-    | `border border-${1 | 2 | 3 | 4 | 5}`      /* width */
 
+type BootstrapBorderAddition = `border-${BootstrapThemeColors} border-${1 | 2 | 3 | 4 | 5}`
+
+export type BootstrapBorder = {
+    position: BootstrapBorderDirection;
+    addition?: BootstrapBorderAddition;
+}
+
+
+/**
+ * All im One
+ */
 export type CssStyle = {
     height?: CssHeight;
     width?: CssWidth;

@@ -16,7 +16,6 @@
         "strict": true, 
           /* Completeness */
         "skipLibCheck": true,
-
 		  /* absolute dir */
 		"baseUrl": "./",
 		"paths": {
@@ -26,7 +25,5 @@
 		},
 		  /* Emit *.jsx files with the JSX unchanged */
 		"jsx": "preserve"
-	
-
     }
 }

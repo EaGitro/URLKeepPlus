@@ -17,8 +17,8 @@ function clickEvent(){
 
 const element = (
     <div className='h-100'>
-        <Head cssStyle={{height: 'h-10', border:'border border-info'}} />
-        <MainBody cssStyle={{height: 'h-90', border:'border border-success'}}/>
+        <Head cssStyle={{height: 'h-10', border: {position:'border', addition:'border-info border-1'}}} />
+        <MainBody cssStyle={{height: 'h-90', border:{position:'border', addition:'border-success border-1'}}}/>
     </div>
 );
 const root = ReactDOM.createRoot(document.getElementById('root')!);

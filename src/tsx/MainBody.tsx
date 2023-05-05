@@ -26,11 +26,11 @@ export default function MainBody(props: Props) {
             <Container fluid className='h-100'>
                 <Row className='h-100'>
                     <Col xs={"3"}>
-                        <SideMenu/>
+                        <SideMenu cssStyle={{border:{position:'border', addition:'border-danger border-1'}}}/>
                     </Col>
                     <Col xs={"9"}>
-                        <MainPanel cssStyle={{height: 'h-70'}}/>
-                        <SubPanel cssStyle={{height: 'h-70'}}/>
+                        <MainPanel cssStyle={{height: 'h-85'}}/>
+                        <SubPanel cssStyle={{height: 'h-15'}}/>
                     </Col>
                 </Row>
             </Container>
