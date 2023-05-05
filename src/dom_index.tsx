@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 
 
 import Head from './tsx/Head';
-import MainBody from './tsx/MainBody'
+import MainBody from '~/src/tsx/MainBody'
 
 // import {CssHeight} from '../tsTypes/styleTypes'
 
@@ -17,8 +17,8 @@ function clickEvent(){
 
 const element = (
     <div className='h-100'>
-        <Head cssStyle={{height: 'h-10'}} />
-        <MainBody cssStyle={{height: 'h-90'}}/>
+        <Head cssStyle={{height: 'h-10', border:'border border-info'}} />
+        <MainBody cssStyle={{height: 'h-90', border:'border border-success'}}/>
     </div>
 );
 const root = ReactDOM.createRoot(document.getElementById('root')!);

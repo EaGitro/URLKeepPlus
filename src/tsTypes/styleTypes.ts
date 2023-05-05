@@ -1,5 +1,8 @@
 // styleTypes.ts
-// Type definitioins
+// Type definitioins for style
+
+
+
 
 export type CssHeight = 'h-5'
     | 'h-10'
@@ -43,9 +46,32 @@ export type CssWidth = 'w-5'
     | 'w-100';
 
 
+type BootstrapThemeColors = 'primary' // blue 
+    | 'secondary'   // gray
+    | 'success'     // green
+    | 'info'        // sky
+    | 'warning'     // yellow
+    | 'danger'      // red
+    | 'light'       // white
+    | 'dark'        // black
+
+type BootstrapPositions = 'top'  // top
+    | 'end'        // right
+    | 'bottom'     // bottom
+    | 'start'      // left
+
+
+
+
+export type BootstrapBorder = 'border'
+    | `border-${BootstrapPositions}`            /* positions */
+    | `border border-${BootstrapThemeColors}`   /* colors */
+    | `border border-${1 | 2 | 3 | 4 | 5}`      /* width */
+
 export type CssStyle = {
     height?: CssHeight;
     width?: CssWidth;
+    border?: BootstrapBorder;
 };
 
 

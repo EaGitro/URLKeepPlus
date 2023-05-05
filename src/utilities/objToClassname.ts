@@ -12,7 +12,7 @@ export default function objToClassname(param: AnyObj) {
 
     let result: string = "";
     let tmp = Object.values(param);
-    // console.log("tmp", tmp)
+    console.log("tmp", tmp)
     if (tmp.length == 0) {
         return
     }

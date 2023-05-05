@@ -1,7 +1,19 @@
 import React from 'react';
 
-export default function SubPanel(){
+import {CssStyle} from '~/src/tsTypes/styleTypes'
+
+import objToClassname from '~/src/utilities/objToClassname';
+
+
+type Props = {
+    cssStyle: CssStyle;
+}
+
+export default function SubPanel(props: Props){
     return(
-        <>aaaaaaaaaaaaa</>
+        <div className={objToClassname(props.cssStyle)}>
+            SubPanel
+        </div>
+        
     )
 }

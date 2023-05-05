@@ -29,17 +29,30 @@ module.exports = {
       },
     ],
   },
-  resolve:{
-    alias:{
-      "~/src": path.resolve(__dirname, 'src/'),
-      "~": path.resolve(__dirname)
-    }
-  },
+  // resolve: {
+  //   alias: {
+  //     "~/src": path.resolve(__dirname, 'src'),
+  //     "~": path.resolve(__dirname,'.')
+  //   },
+  //   modules: [
+  //     path.resolve('./src')
+  //   ]
+  // },
 
   target: ["web", "es2021"],            /* どの環境に対してコンパイルするか. 今回はchrome用なので es2021 */
 
   resolve: {    /*ERROR:  Field 'browser' doesn't contain a valid alias configuration を解決 */
-    extensions: ['.js', '.ts', '.tsx']  // 拡張子で迷子にならないように
+    extensions: ['.js', '.ts', '.tsx'],  // 拡張子で迷子にならないように
+
+    alias: {
+      "~/src": path.resolve(__dirname, 'src'),
+      "~": path.resolve(__dirname, '.')
+    }, 
+    modules: [
+      path.resolve('./src'),
+      path.resolve('./node_modules')
+    ]
+
   },
 
   mode: 'development',                  /* デバッグ用 */

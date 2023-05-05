@@ -10,9 +10,9 @@ import SubPanel from './MainBody/SubPanel'
 
 // import {CssHeight} from '../tsTypes/styleTypes'
 
-import {CssHeight, CssStyle} from '../tsTypes/styleTypes'
+import {CssHeight, CssStyle} from './../tsTypes/styleTypes'
 
-import objToClassname from '../utilities/objToClassname';
+import objToClassname from '~/src/utilities/objToClassname';
 
 
 type Props = {
@@ -30,7 +30,7 @@ export default function MainBody(props: Props) {
                     </Col>
                     <Col xs={"9"}>
                         <MainPanel cssStyle={{height: 'h-70'}}/>
-                        <SubPanel/>
+                        <SubPanel cssStyle={{height: 'h-70'}}/>
                     </Col>
                 </Row>
             </Container>
