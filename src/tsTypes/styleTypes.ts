@@ -74,12 +74,23 @@ type BootstrapPositions = 'top'  // top
 type BootstrapBorderDirection = 'border'
     | `border-${BootstrapPositions}`            /* positions */
 
-type BootstrapBorderAddition = `border-${BootstrapThemeColors} border-${1 | 2 | 3 | 4 | 5}`
+type BootstrapBorderAddition = `border-${BootstrapThemeColors} border-${1 | 2 | 3 | 4 | 5}` // Colors and border width
+
 
 export type BootstrapBorder = {
     position: BootstrapBorderDirection;
     addition?: BootstrapBorderAddition;
 }
+
+
+// Margin/Padding
+export type BootstrapMargin =
+    `m${'t' | 'b' | 's' | 'e' | 'x' | 'y' | ''}-${0 | 1 | 2 | 3 | 4 | 5 | "auto"}`
+
+export type BootstrapPadding =
+    `p${'t' | 'b' | 's' | 'e' | 'x' | 'y' | ''}-${0 | 1 | 2 | 3 | 4 | 5 | "auto"}`
+// `${padding/margin}${top/bottom/start(left)/end(right)/x/y}-{0rem/1rem/2rem/3rem/4rem/5rem/auto}`
+
 
 
 /**
@@ -89,7 +100,10 @@ export type CssStyle = {
     height?: CssHeight;
     width?: CssWidth;
     border?: BootstrapBorder;
+    margin?: BootstrapMargin;
+    padding?: BootstrapPadding;
 };
+
 
 
 

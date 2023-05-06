@@ -1,13 +1,13 @@
 /**
- * Convert object's properties to String.
+ * Convert object's properties' values to String.
  * "property1 property2 ..." 
  */
 
 
+import {CssStyle} from '~/src/tsTypes/styleTypes'
 
 
-
-export default function objToClassname(param: AnyObj) {
+export default function objToClassname(param: CssStyle) {
     
 
     let result: string = "";
@@ -52,6 +52,6 @@ export default function objToClassname(param: AnyObj) {
     return result;
 }
 
-type AnyObj = {
-    [K: string]: any;
-}
+// type AnyObj = {
+//     [K: string]: any;
+// }

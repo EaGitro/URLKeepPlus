@@ -10,14 +10,18 @@ import objToClassname from '../../utilities/objToClassname';
 
 type Props = {
     cssStyle: CssStyle;
+    tabsInfo: {};
 }
 
 // tmp();
 
 export default function MainPanel(props: Props){
+
+    console.log("MainPanel",props.tabsInfo)
     return(
         <div className={objToClassname(props.cssStyle)}>
             MainPanel
+            {/* {objToClassname(props.tabsInfo)} */}
             
         </div>
     )
