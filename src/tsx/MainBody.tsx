@@ -32,7 +32,7 @@ export default function MainBody(props: Props) {
      */
 
     let tabInfos: any[] = [];
-
+    let [state, setState] = useState([0]);
 
     console.log("MainBody");
 
@@ -59,38 +59,50 @@ export default function MainBody(props: Props) {
         console.log(lightenedTabs);
 
         tabInfos = lightenedTabs;
+        setState(tabInfos);
     }
 
     function getCurrentTabs() {
         chrome.tabs.query({}, callBackFuncGetTabs);
     }
 
-    chrome.tabs.onDetached.addListener(getCurrentTabs);
-    chrome.tabs.onMoved.addListener(getCurrentTabs);
-    chrome.tabs.onRemoved.addListener(getCurrentTabs);
-    chrome.tabs.onCreated.addListener(getCurrentTabs);
-    chrome.tabs.onUpdated.addListener(getCurrentTabs);
-    getCurrentTabs();
+    // chrome.tabs.onDetached.addListener(getCurrentTabs);
+    // chrome.tabs.onMoved.addListener(getCurrentTabs);
+    // chrome.tabs.onRemoved.addListener(getCurrentTabs);
+    // chrome.tabs.onCreated.addListener(getCurrentTabs);
+    // chrome.tabs.onUpdated.addListener(getCurrentTabs);
+    // getCurrentTabs();
     // chrome.tabs.onUpdated.addListener(getCurrentTabs);
 
-    let [state, setState] = useState({});
-    useEffect(() => {
-        setState(tabInfos)
-    }, tabInfos)
+    // let [state, setState] = useState([0]);
+    // useEffect(()=>{
+    //     console.log("useEffect render")
+    //     getCurrentTabs();
+    //     setState(tabInfos);
+    // }, [state])
 
+    useEffect(()=>{
+        chrome.tabs.onDetached.addListener(getCurrentTabs);
+        chrome.tabs.onMoved.addListener(getCurrentTabs);
+        chrome.tabs.onRemoved.addListener(getCurrentTabs);
+        chrome.tabs.onCreated.addListener(getCurrentTabs);
+        chrome.tabs.onUpdated.addListener(getCurrentTabs);
+        getCurrentTabs();
+    },[])
 
 
     return (
         <div className={objToClassname(props.cssStyle)}>
             <Container fluid className={objToClassname({ height: 'h-100' })}>
                 <Row className={objToClassname({ height: 'h-100' })}>
-                    <Col xs={"3"} className={objToClassname({ padding: 'p-0' })}>
+                    <Col xs={"3"} className={objToClassname({ padding: 'p-0', height:'h-100' })}>
                         <SideMenu
                             cssStyle={{ border: { position: 'border', addition: 'border-danger border-1' }, height: 'h-100', width: 'w-100' }}
                         />
                     </Col>
-                    <Col xs={"9"} className={objToClassname({ padding: 'p-0' })}>
+                    <Col xs={"9"} className={objToClassname({ padding: 'p-0', height:'h-100' })}>
                         <MainMenu tabsInfo={state} />
+                        {/* <MainMenu tabsInfo={tabInfos} /> */}
                     </Col>
                 </Row>
             </Container>

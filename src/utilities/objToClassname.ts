@@ -4,11 +4,11 @@
  */
 
 
-import {CssStyle} from '~/src/tsTypes/styleTypes'
+import { CssStyle } from '~/src/tsTypes/styleTypes'
 
 
 export default function objToClassname(param: CssStyle) {
-    
+
 
     let result: string = "";
     let tmp = Object.values(param);
@@ -48,10 +48,11 @@ export default function objToClassname(param: CssStyle) {
 
 
     }
-    // console.log(result);
+    console.log("result", result);
     return result;
 }
 
 // type AnyObj = {
 //     [K: string]: any;
 // }
+

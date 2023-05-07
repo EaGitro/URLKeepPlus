@@ -93,6 +93,12 @@ export type BootstrapPadding =
 
 
 
+// overflow
+export type BootstrapOverflow =
+    `overflow-${'auto' | 'hidden' | 'visible' | 'scroll'}`
+
+
+
 /**
  * All im One
  */
@@ -102,6 +108,7 @@ export type CssStyle = {
     border?: BootstrapBorder;
     margin?: BootstrapMargin;
     padding?: BootstrapPadding;
+    overflow?: BootstrapOverflow
 };
 
 
