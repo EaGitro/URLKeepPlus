@@ -12,6 +12,7 @@ import { useState, useEffect } from 'react';
 import { TabInfoObj } from '~/src/tsTypes/tabInfoTypes';
 import Container from 'react-bootstrap/Container';
 import { Col, Row } from 'react-bootstrap';
+import { StoragedData } from '~/src/tsTypes/propsTypes';
 import getStrage_promise from '~/src/utilities/getStorage_promise';
 import setStrage_promise from '~/src/utilities/setStorage_promise';
 
@@ -21,11 +22,15 @@ import setStrage_promise from '~/src/utilities/setStorage_promise';
 type Props = {
     cssStyle: CssStyle;
     tabsInfo: TabInfoObj[];
+    storagedData: StoragedData;
 }
 
 // tmp();
 
 export default function MainPanel(props: Props) {
+
+    console.log("MainPanel props", props)
+    console.log(props.storagedData)
 
     // let [mainDataObjState, setState] = useState({
     //     keywordList: Array<any>,
@@ -62,12 +67,17 @@ export default function MainPanel(props: Props) {
     //     getMainData();
     // }, [])
 
+    let stragedUrls = Object.keys(props.storagedData.mainDataObj).map((dateAndUrl) => {
+        return dateAndUrl.split(" ")[1]
+    })
 
 
 
     console.log(props.tabsInfo)
 
     let listItems = props.tabsInfo.map((tabsInfoObj) => {
+
+
         return (
             <Container className='list-group-item list-group-item-action w-100' key={tabsInfoObj.id}>
                 <Row className='flex-nowrap w-100 m-0 p-0' >
@@ -75,18 +85,19 @@ export default function MainPanel(props: Props) {
                         <input className="form-check-input" type="checkbox" value="" id={String(tabsInfoObj.id)} />
                     </Col>
                     <Col xs={1}>
-                        {()=>{
-                            if 
-                        }}
+                        {(() => {
+                            if (tabsInfoObj.url in stragedUrls) {
+                                return "saved"
+                            }
+                        })()}
                     </Col>
-                    <Col xs='10'
+                    <Col xs={10}
                         onClick={
                             () => {
                                 chrome.tabs.update(tabsInfoObj.id, { active: true })
                             }
                         }
-                        >
-
+                    >
                         <div className='breakword w-100'>
                             {tabsInfoObj.title}
                         </div>
@@ -103,7 +114,7 @@ export default function MainPanel(props: Props) {
     console.log("MainPanel", props.tabsInfo)
     return (
         <div className={objToClassname(props.cssStyle)}>
-            MainPanel
+            {/* MainPanel */}
             <div className={objToClassname({ width: 'w-100', height: 'h-100', list: { listGroup: 'list-group' }, margin: 'm-0', padding: 'p-0' })}>
                 {listItems}
             </div>

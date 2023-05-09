@@ -5,24 +5,22 @@ import SubPanel from '~/src/tsx/MainBody/SubPanel'
 
 import { TabInfoObj } from '~/src/tsTypes/tabInfoTypes';
 
+import { StoragedData } from '~/src/tsTypes/propsTypes';
+
 import { useState, useEffect } from 'react';
 
 
 
 type Props = {
-    storagedData: {
-        
-            keywordList: Array<any>,
-            groupList: Array<any>,
-            mainDataObj: {}
-        }
-    
+    storagedData: StoragedData;
 }
 
 export default function MainMenu(props: Props) {
 /**
  * Get Tabs' info & reload
  */
+
+    console.log("MainMenu props", props, props.storagedData.mainDataObj)
 
     let tabInfos: any[] = [];
     let [state, setState] = useState(Array<any>);
@@ -76,6 +74,7 @@ export default function MainMenu(props: Props) {
             <MainPanel
                 cssStyle={{ height: 'h-80', overflow: 'overflow-auto' }}
                 tabsInfo={state}
+                storagedData={props.storagedData}
             />
             <SubPanel
                 cssStyle={{ height: 'h-20' }}

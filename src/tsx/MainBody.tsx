@@ -82,7 +82,7 @@ export default function MainBody(props: Props) {
 
     // =================================================
 
-    
+
 
     let [dataObjState, setState] = useState({
         keywordList: Array<any>,
@@ -90,6 +90,14 @@ export default function MainBody(props: Props) {
         mainDataObj: {}
     });
 
+    // async function assignDataToSet() {
+    //     // (async () => {
+    //     dataObjState.keywordList = await getStrage_promise("keywordList");
+    //     dataObjState.groupList = await getStrage_promise("groupList");
+    //     dataObjState.mainDataObj = await getStrage_promise("mainDataObj")
+    //     // })()
+    //     return
+    // }
 
     useEffect(() => {
         const getMainData = async () => {
@@ -100,19 +108,21 @@ export default function MainBody(props: Props) {
             if (!(Object.keys(getDefault).includes("keywordList"))) {
                 await setStrage_promise({ "keywordList": [] })
             }
+
             if (!(Object.keys(getDefault).includes("groupList"))) {
                 await setStrage_promise({ "groupList": [] })
             }
+
             if (!(Object.keys(getDefault).includes("mainDataObj"))) {
                 await setStrage_promise({ "mainDataObj": [] })
             }
 
             console.log("promise", await getStrage_promise(null));
 
-            setState(async ()=>{
-                dataObjState.keywordList = await getStrage_promise("keywordList");
-                dataObjState.groupList = await getStrage_promise("groupList");
-                dataObjState.mainDataObj = await getStrage_promise("mainDataObj")
+            setState({
+                keywordList: await getStrage_promise("keywordList"),
+                groupList: await getStrage_promise("groupList"),
+                mainDataObj: await getStrage_promise("mainDataObj")
             })
 
         }
@@ -126,13 +136,13 @@ export default function MainBody(props: Props) {
         <div className={objToClassname(props.cssStyle)}>
             <Container fluid className={objToClassname({ height: 'h-100' })}>
                 <Row className={objToClassname({ height: 'h-100' })}>
-                    <Col xs={"3"} className={objToClassname({ padding: 'p-0', height:'h-100' })}>
+                    <Col xs={"3"} className={objToClassname({ padding: 'p-0', height: 'h-100' })}>
                         <SideMenu
                             cssStyle={{ border: { position: 'border', addition: 'border-danger border-1' }, height: 'h-100', width: 'w-100' }}
                         />
                     </Col>
-                    <Col xs={"9"} className={objToClassname({ padding: 'p-0', height:'h-100' })}>
-                        <MainMenu storagedData={dataObjState}/>
+                    <Col xs={"9"} className={objToClassname({ padding: 'p-0', height: 'h-100' })}>
+                        <MainMenu storagedData={dataObjState} />
                         {/* <MainMenu tabsInfo={tabInfos} /> */}
                     </Col>
                 </Row>
