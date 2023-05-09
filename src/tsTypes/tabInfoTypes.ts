@@ -5,6 +5,7 @@ export type TabInfoObj = {
     "id": number,
     "index": number,
     "windowId": number,
+    "title": string,
     "__compatible__": any[]
 }
 

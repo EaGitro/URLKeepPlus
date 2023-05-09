@@ -12,7 +12,7 @@ export default function objToClassname(param: CssStyle) {
 
     let result: string = "";
     let tmp = Object.values(param);
-    console.log("tmp", tmp)
+    // console.log("tmp", tmp)
     if (tmp.length == 0) {
         return
     }
@@ -48,7 +48,7 @@ export default function objToClassname(param: CssStyle) {
 
 
     }
-    console.log("result", result);
+    // console.log("result", result);
     return result;
 }
 

@@ -13,10 +13,13 @@ import MainMenu from '~/src/tsx/MainBody/MainMenu'
 // import {CssHeight} from '../tsTypes/styleTypes'
 
 import { CssStyle } from '~/src/tsTypes/styleTypes'
-import { TabInfoObj } from '~/src/tsTypes/tabInfoTypes';
+// import { TabInfoObj } from '~/src/tsTypes/tabInfoTypes';
 // import getCurrentTabs from '~/src/utilities/getCurrentTabs';
 
 import objToClassname from '~/src/utilities/objToClassname';
+
+import getStrage_promise from '~/src/utilities/getStorage_promise';
+import setStrage_promise from '~/src/utilities/setStorage_promise';
 
 import { useState, useEffect } from 'react';
 
@@ -31,64 +34,76 @@ export default function MainBody(props: Props) {
      * Get Tabs' info & reload
      */
 
-    let tabInfos: any[] = [];
-    let [state, setState] = useState([0]);
-
-    console.log("MainBody");
-
-    function callBackFuncGetTabs(tabs: any[]) {
-        console.log(tabs);
-        /* reduce the amount of info */
-
-        let lightenedTabs: any[] = tabs.map(val => {
-            let tmp: TabInfoObj =
-            {
-                "url": val["url"],
-                "favIconUrl": val["favIconUrl"],
-                "groupId": val["groupId"],
-                "id": val["id"],
-                "index": val["index"],
-                "windowId": val["windowId"],
-                "__compatible__": []
-            }
-            return tmp
-        }
-        )
-
-
-        console.log(lightenedTabs);
-
-        tabInfos = lightenedTabs;
-        setState(tabInfos);
-    }
-
-    function getCurrentTabs() {
-        chrome.tabs.query({}, callBackFuncGetTabs);
-    }
-
-    // chrome.tabs.onDetached.addListener(getCurrentTabs);
-    // chrome.tabs.onMoved.addListener(getCurrentTabs);
-    // chrome.tabs.onRemoved.addListener(getCurrentTabs);
-    // chrome.tabs.onCreated.addListener(getCurrentTabs);
-    // chrome.tabs.onUpdated.addListener(getCurrentTabs);
-    // getCurrentTabs();
-    // chrome.tabs.onUpdated.addListener(getCurrentTabs);
-
+    // let tabInfos: any[] = [];
     // let [state, setState] = useState([0]);
-    // useEffect(()=>{
-    //     console.log("useEffect render")
-    //     getCurrentTabs();
-    //     setState(tabInfos);
-    // }, [state])
 
-    useEffect(()=>{
-        chrome.tabs.onDetached.addListener(getCurrentTabs);
-        chrome.tabs.onMoved.addListener(getCurrentTabs);
-        chrome.tabs.onRemoved.addListener(getCurrentTabs);
-        chrome.tabs.onCreated.addListener(getCurrentTabs);
-        chrome.tabs.onUpdated.addListener(getCurrentTabs);
-        getCurrentTabs();
-    },[])
+    // console.log("MainBody");
+
+    // function callBackFuncGetTabs(tabs: any[]) {
+    //     console.log(tabs);
+    //     /* reduce the amount of info */
+
+    //     let lightenedTabs: any[] = tabs.map(val => {
+    //         let tmp: TabInfoObj =
+    //         {
+    //             "url": val["url"],
+    //             "favIconUrl": val["favIconUrl"],
+    //             "groupId": val["groupId"],
+    //             "id": val["id"],
+    //             "index": val["index"],
+    //             "windowId": val["windowId"],
+    //             "title": val["title"],
+    //             "__compatible__": []
+    //         }
+    //         return tmp
+    //     }
+    //     )
+
+
+    //     console.log(lightenedTabs);
+
+    //     tabInfos = lightenedTabs;
+    //     setState(tabInfos);
+    // }
+
+    // function getCurrentTabs() {
+    //     chrome.tabs.query({}, callBackFuncGetTabs);
+    // }
+
+    // useEffect(()=>{
+    //     chrome.tabs.onDetached.addListener(getCurrentTabs);
+    //     chrome.tabs.onMoved.addListener(getCurrentTabs);
+    //     chrome.tabs.onRemoved.addListener(getCurrentTabs);
+    //     chrome.tabs.onCreated.addListener(getCurrentTabs);
+    //     chrome.tabs.onUpdated.addListener(getCurrentTabs);
+    //     getCurrentTabs();
+    // },[])
+
+
+    // =================================================
+
+    
+    let [mainDataObjState, setState] = useState(null);
+
+    useEffect(() => {
+        const getMainData = async () => {
+            let getDefault: {
+                [K: string]: any;
+            } = await getStrage_promise(null);
+
+            if (!(Object.keys(getDefault).includes("keywordList"))) {
+                await setStrage_promise({ "keywordList": [] })
+            }
+            if (!(Object.keys(getDefault).includes("groupList"))) {
+                await setStrage_promise({ "groupList": [] })
+            }
+            if (!(Object.keys(getDefault).includes("mainDataObj"))) {
+                await setStrage_promise({ "mainDataObj": [] })
+            }
+
+        }
+    }, [])
+
 
 
     return (
@@ -101,7 +116,7 @@ export default function MainBody(props: Props) {
                         />
                     </Col>
                     <Col xs={"9"} className={objToClassname({ padding: 'p-0', height:'h-100' })}>
-                        <MainMenu tabsInfo={state} />
+                        <MainMenu/>
                         {/* <MainMenu tabsInfo={tabInfos} /> */}
                     </Col>
                 </Row>

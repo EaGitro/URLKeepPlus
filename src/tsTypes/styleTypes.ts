@@ -85,18 +85,31 @@ export type BootstrapBorder = {
 
 // Margin/Padding
 export type BootstrapMargin =
-    `m${'t' | 'b' | 's' | 'e' | 'x' | 'y' | ''}-${0 | 1 | 2 | 3 | 4 | 5 | "auto"}`
+    `m${'t' | 'b' | 's' | 'e' | 'x' | 'y' | ''}-${0 | 1 | 2 | 3 | 4 | 5 | "auto"}`;
 
 export type BootstrapPadding =
-    `p${'t' | 'b' | 's' | 'e' | 'x' | 'y' | ''}-${0 | 1 | 2 | 3 | 4 | 5 | "auto"}`
+    `p${'t' | 'b' | 's' | 'e' | 'x' | 'y' | ''}-${0 | 1 | 2 | 3 | 4 | 5 | "auto"}`;
 // `${padding/margin}${top/bottom/start(left)/end(right)/x/y}-{0rem/1rem/2rem/3rem/4rem/5rem/auto}`
 
 
 
 // overflow
 export type BootstrapOverflow =
-    `overflow-${'auto' | 'hidden' | 'visible' | 'scroll'}`
+    `overflow-${'auto' | 'hidden' | 'visible' | 'scroll'}`;
 
+
+
+
+// custom list
+
+export type BootstrapCustomListGroup = 'list-group';
+
+export type BootstrapCustomListItem = 'list-group-item' | 'list-group-item list-group-item-action';
+
+export type BootstrapCustomList = {
+    listGroup?: BootstrapCustomListGroup;
+    listItem?:BootstrapCustomListItem;
+}
 
 
 /**
@@ -108,7 +121,8 @@ export type CssStyle = {
     border?: BootstrapBorder;
     margin?: BootstrapMargin;
     padding?: BootstrapPadding;
-    overflow?: BootstrapOverflow
+    overflow?: BootstrapOverflow;
+    list?: BootstrapCustomList;
 };
 
 
