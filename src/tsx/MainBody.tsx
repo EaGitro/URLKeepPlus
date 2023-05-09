@@ -84,7 +84,7 @@ export default function MainBody(props: Props) {
 
     
 
-    let [mainDataObjState, setState] = useState({
+    let [dataObjState, setState] = useState({
         keywordList: Array<any>,
         groupList: Array<any>,
         mainDataObj: {}
@@ -110,9 +110,9 @@ export default function MainBody(props: Props) {
             console.log("promise", await getStrage_promise(null));
 
             setState(async ()=>{
-                mainDataObjState.keywordList = await getStrage_promise("keywordList");
-                mainDataObjState.groupList = await getStrage_promise("groupList");
-                mainDataObjState.mainDataObj = await getStrage_promise("mainDataObj")
+                dataObjState.keywordList = await getStrage_promise("keywordList");
+                dataObjState.groupList = await getStrage_promise("groupList");
+                dataObjState.mainDataObj = await getStrage_promise("mainDataObj")
             })
 
         }
@@ -132,7 +132,7 @@ export default function MainBody(props: Props) {
                         />
                     </Col>
                     <Col xs={"9"} className={objToClassname({ padding: 'p-0', height:'h-100' })}>
-                        <MainMenu/>
+                        <MainMenu storagedData={dataObjState}/>
                         {/* <MainMenu tabsInfo={tabInfos} /> */}
                     </Col>
                 </Row>

@@ -10,7 +10,13 @@ import { useState, useEffect } from 'react';
 
 
 type Props = {
-    // tabsInfo: any[]
+    storagedData: {
+        
+            keywordList: Array<any>,
+            groupList: Array<any>,
+            mainDataObj: {}
+        }
+    
 }
 
 export default function MainMenu(props: Props) {
