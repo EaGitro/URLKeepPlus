@@ -83,7 +83,13 @@ export default function MainBody(props: Props) {
     // =================================================
 
     
-    let [mainDataObjState, setState] = useState(null);
+
+    let [mainDataObjState, setState] = useState({
+        keywordList: Array<any>,
+        groupList: Array<any>,
+        mainDataObj: {}
+    });
+
 
     useEffect(() => {
         const getMainData = async () => {
@@ -101,8 +107,18 @@ export default function MainBody(props: Props) {
                 await setStrage_promise({ "mainDataObj": [] })
             }
 
+            console.log("promise", await getStrage_promise(null));
+
+            setState(async ()=>{
+                mainDataObjState.keywordList = await getStrage_promise("keywordList");
+                mainDataObjState.groupList = await getStrage_promise("groupList");
+                mainDataObjState.mainDataObj = await getStrage_promise("mainDataObj")
+            })
+
         }
+        getMainData();
     }, [])
+
 
 
 

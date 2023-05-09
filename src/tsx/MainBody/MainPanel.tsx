@@ -27,40 +27,40 @@ type Props = {
 
 export default function MainPanel(props: Props) {
 
-    let [mainDataObjState, setState] = useState({
-        keywordList: Array<any>,
-        groupList: Array<any>,
-        mainDataObj: {}
-    });
+    // let [mainDataObjState, setState] = useState({
+    //     keywordList: Array<any>,
+    //     groupList: Array<any>,
+    //     mainDataObj: {}
+    // });
 
 
-    useEffect(() => {
-        const getMainData = async () => {
-            let getDefault: {
-                [K: string]: any;
-            } = await getStrage_promise(null);
+    // useEffect(() => {
+    //     const getMainData = async () => {
+    //         let getDefault: {
+    //             [K: string]: any;
+    //         } = await getStrage_promise(null);
 
-            if (!(Object.keys(getDefault).includes("keywordList"))) {
-                await setStrage_promise({ "keywordList": [] })
-            }
-            if (!(Object.keys(getDefault).includes("groupList"))) {
-                await setStrage_promise({ "groupList": [] })
-            }
-            if (!(Object.keys(getDefault).includes("mainDataObj"))) {
-                await setStrage_promise({ "mainDataObj": [] })
-            }
+    //         if (!(Object.keys(getDefault).includes("keywordList"))) {
+    //             await setStrage_promise({ "keywordList": [] })
+    //         }
+    //         if (!(Object.keys(getDefault).includes("groupList"))) {
+    //             await setStrage_promise({ "groupList": [] })
+    //         }
+    //         if (!(Object.keys(getDefault).includes("mainDataObj"))) {
+    //             await setStrage_promise({ "mainDataObj": [] })
+    //         }
 
-            console.log("promise", await getStrage_promise(null));
+    //         console.log("promise", await getStrage_promise(null));
 
-            setState(async ()=>{
-                mainDataObjState.keywordList = await getStrage_promise("keywordList");
-                mainDataObjState.groupList = await getStrage_promise("groupList");
-                mainDataObjState.mainDataObj = await getStrage_promise("mainDataObj")
-            })
+    //         setState(async ()=>{
+    //             mainDataObjState.keywordList = await getStrage_promise("keywordList");
+    //             mainDataObjState.groupList = await getStrage_promise("groupList");
+    //             mainDataObjState.mainDataObj = await getStrage_promise("mainDataObj")
+    //         })
 
-        }
-        getMainData();
-    }, [])
+    //     }
+    //     getMainData();
+    // }, [])
 
 
 
@@ -75,7 +75,9 @@ export default function MainPanel(props: Props) {
                         <input className="form-check-input" type="checkbox" value="" id={String(tabsInfoObj.id)} />
                     </Col>
                     <Col xs={1}>
-                        saved
+                        {()=>{
+                            if 
+                        }}
                     </Col>
                     <Col xs='10'
                         onClick={
