@@ -108,9 +108,14 @@ export type BootstrapCustomListItem = 'list-group-item' | 'list-group-item list-
 
 export type BootstrapCustomList = {
     listGroup?: BootstrapCustomListGroup;
-    listItem?:BootstrapCustomListItem;
+    listItem?: BootstrapCustomListItem;
 }
 
+
+// border-radius
+
+export type BootstrapRounded = `rounded` |
+    `rounded-${0 | 1 | 2 | 3 | BootstrapPositions | 'circle' | 'pill'}`
 
 /**
  * All im One
@@ -123,6 +128,7 @@ export type CssStyle = {
     padding?: BootstrapPadding;
     overflow?: BootstrapOverflow;
     list?: BootstrapCustomList;
+    rounded?: BootstrapRounded;
 };
 
 

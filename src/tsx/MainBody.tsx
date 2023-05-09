@@ -138,10 +138,10 @@ export default function MainBody(props: Props) {
                 <Row className={objToClassname({ height: 'h-100' })}>
                     <Col xs={"3"} className={objToClassname({ padding: 'p-0', height: 'h-100' })}>
                         <SideMenu
-                            cssStyle={{ border: { position: 'border', addition: 'border-danger border-1' }, height: 'h-100', width: 'w-100' }}
+                            cssStyle={{ border: { position: 'border', addition: 'border-info border-1' },rounded:'rounded' , height: 'h-100', width: 'w-100' }}
                         />
                     </Col>
-                    <Col xs={"9"} className={objToClassname({ padding: 'p-0', height: 'h-100' })}>
+                    <Col xs={"9"} className={objToClassname({ padding: 'p-0', height: 'h-100', border: { position: 'border', addition: 'border-info border-1' }, rounded:'rounded' })}>
                         <MainMenu storagedData={dataObjState} />
                         {/* <MainMenu tabsInfo={tabInfos} /> */}
                     </Col>

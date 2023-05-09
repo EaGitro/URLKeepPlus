@@ -72,12 +72,12 @@ export default function MainMenu(props: Props) {
     return (
         <>
             <MainPanel
-                cssStyle={{ height: 'h-80', overflow: 'overflow-auto' }}
+                cssStyle={{ height: 'h-75', overflow: 'overflow-auto' }}
                 tabsInfo={state}
                 storagedData={props.storagedData}
             />
             <SubPanel
-                cssStyle={{ height: 'h-20' }}
+                cssStyle={{ height: 'h-25', border: { position: 'border', addition: 'border-info border-2' }, rounded:'rounded'}}
             />
         </>
     )

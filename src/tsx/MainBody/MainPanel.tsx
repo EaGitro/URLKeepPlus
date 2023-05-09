@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 
 
 import { CssStyle } from '../../tsTypes/styleTypes'
@@ -6,12 +6,13 @@ import { CssStyle } from '../../tsTypes/styleTypes'
 import objToClassname from '../../utilities/objToClassname';
 
 import objToString from '~/src/utilities/objTostring';
-import { ListItem } from 'react-bootstrap/lib/Media';
+// import { ListItem } from 'react-bootstrap/lib/Media';
 
 import { useState, useEffect } from 'react';
 import { TabInfoObj } from '~/src/tsTypes/tabInfoTypes';
 import Container from 'react-bootstrap/Container';
-import { Col, Row } from 'react-bootstrap';
+import Row  from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import { StoragedData } from '~/src/tsTypes/propsTypes';
 import getStrage_promise from '~/src/utilities/getStorage_promise';
 import setStrage_promise from '~/src/utilities/setStorage_promise';
