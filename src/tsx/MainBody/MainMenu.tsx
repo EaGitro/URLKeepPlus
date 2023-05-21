@@ -16,12 +16,12 @@ type Props = {
 }
 
 export default function MainMenu(props: Props) {
-/**
- * Get Tabs' info & reload
- */
+    /**
+     * Get Tabs' info & reload
+     */
 
     console.log("MainMenu props", props, props.storagedData.mainDataObj)
-    let tmp:any[]=[]
+    let tmp: any[] = []
     let tabInfos: any[] = [];
     let [state, setState] = useState(tmp);
 
@@ -68,6 +68,10 @@ export default function MainMenu(props: Props) {
     }, [])
 
 
+    /**
+     * receive which check boxs are selected from MainPanel and send state to MainPanel(for receiving), to SubPanel(for save) 
+     */
+
 
     return (
         <>
@@ -77,7 +81,7 @@ export default function MainMenu(props: Props) {
                 storagedData={props.storagedData}
             />
             <SubPanel
-                cssStyle={{ height: 'h-25', border: { position: 'border', addition: 'border-info border-2' }, rounded:'rounded'}}
+                cssStyle={{ height: 'h-25', border: { position: 'border', addition: 'border-info border-2' }, rounded: 'rounded' }}
                 storagedData={props.storagedData}
             />
         </>

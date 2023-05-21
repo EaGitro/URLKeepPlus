@@ -31,7 +31,8 @@ type Props = {
 export default function MainPanel(props: Props) {
 
     console.log("MainPanel props", props);
-    console.log(props.storagedData);
+    console.log("Mainpanel storagedData", props.storagedData);
+    window.windowMainpanelProps = props;
 
     // let [mainDataObjState, setState] = useState({
     //     keywordList: Array<any>,
@@ -111,6 +112,9 @@ export default function MainPanel(props: Props) {
             </Container>
         )
     })
+
+
+    
 
     console.log("MainPanel", props.tabsInfo)
     return (

@@ -132,7 +132,7 @@ export default function MainBody(props: Props) {
 
     console.log("promise", getStrage_promise(null));
 
-
+    console.log("dataObjDtate",dataObjState);
 
     return (
         <div className={objToClassname(props.cssStyle)}>
