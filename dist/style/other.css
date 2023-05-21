@@ -1,3 +1,7 @@
 .breakword {
 	word-wrap: break-word;
 }
+
+.panel-list-item {
+	font-size: 0.75em
+}

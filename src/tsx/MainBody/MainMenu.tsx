@@ -21,9 +21,9 @@ export default function MainMenu(props: Props) {
  */
 
     console.log("MainMenu props", props, props.storagedData.mainDataObj)
-
+    let tmp:any[]=[]
     let tabInfos: any[] = [];
-    let [state, setState] = useState(Array<any>);
+    let [state, setState] = useState(tmp);
 
     console.log("MainBody");
 
@@ -78,6 +78,7 @@ export default function MainMenu(props: Props) {
             />
             <SubPanel
                 cssStyle={{ height: 'h-25', border: { position: 'border', addition: 'border-info border-2' }, rounded:'rounded'}}
+                storagedData={props.storagedData}
             />
         </>
     )

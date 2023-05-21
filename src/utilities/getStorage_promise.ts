@@ -1,10 +1,5 @@
-export default function getStrage_promise(key: string) {
-    console.log("getStrage")
-    return new Promise(
-        (resolve) => {
-            chrome.storage.local.get(key, function (data) { resolve(data) })
-        }
-    )
+export default async function getStrage_promise(key: string) {
+    return await chrome.storage.local.get(key)
 }
 
 // let retVal = await getStrage_promise(null);

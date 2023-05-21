@@ -30,8 +30,8 @@ type Props = {
 
 export default function MainPanel(props: Props) {
 
-    console.log("MainPanel props", props)
-    console.log(props.storagedData)
+    console.log("MainPanel props", props);
+    console.log(props.storagedData);
 
     // let [mainDataObjState, setState] = useState({
     //     keywordList: Array<any>,

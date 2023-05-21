@@ -83,10 +83,10 @@ export default function MainBody(props: Props) {
     // =================================================
 
 
-
+    let tmp: any[] = []
     let [dataObjState, setState] = useState({
-        keywordList: Array<any>,
-        groupList: Array<any>,
+        keywordList: tmp,
+        groupList: tmp,
         mainDataObj: {}
     });
 
@@ -101,6 +101,7 @@ export default function MainBody(props: Props) {
 
     useEffect(() => {
         const getMainData = async () => {
+            console.log("getMainData")
             let getDefault: {
                 [K: string]: any;
             } = await getStrage_promise(null);
@@ -110,7 +111,7 @@ export default function MainBody(props: Props) {
             }
 
             if (!(Object.keys(getDefault).includes("groupList"))) {
-                await setStrage_promise({ "groupList": [] })
+                await setStrage_promise({ "groupList": [1, 2] })
             }
 
             if (!(Object.keys(getDefault).includes("mainDataObj"))) {
@@ -129,6 +130,7 @@ export default function MainBody(props: Props) {
         getMainData();
     }, [])
 
+    console.log("promise", getStrage_promise(null));
 
 
 
@@ -138,10 +140,10 @@ export default function MainBody(props: Props) {
                 <Row className={objToClassname({ height: 'h-100' })}>
                     <Col xs={"3"} className={objToClassname({ padding: 'p-0', height: 'h-100' })}>
                         <SideMenu
-                            cssStyle={{ border: { position: 'border', addition: 'border-info border-1' },rounded:'rounded' , height: 'h-100', width: 'w-100' }}
+                            cssStyle={{ border: { position: 'border', addition: 'border-info border-1' }, rounded: 'rounded', height: 'h-100', width: 'w-100' }}
                         />
                     </Col>
-                    <Col xs={"9"} className={objToClassname({ padding: 'p-0', height: 'h-100', border: { position: 'border', addition: 'border-info border-1' }, rounded:'rounded' })}>
+                    <Col xs={"9"} className={objToClassname({ padding: 'p-0', height: 'h-100', border: { position: 'border', addition: 'border-info border-1' }, rounded: 'rounded' })}>
                         <MainMenu storagedData={dataObjState} />
                         {/* <MainMenu tabsInfo={tabInfos} /> */}
                     </Col>
