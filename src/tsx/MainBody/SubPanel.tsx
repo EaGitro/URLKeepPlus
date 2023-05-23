@@ -18,6 +18,11 @@ import { CssStyle } from '~/src/tsTypes/styleTypes'
 type Props = {
     cssStyle: CssStyle;
     storagedData: StoragedData;
+    setDataObjFunc: React.Dispatch<any>;
+    selectedCheckBox: {
+        state: any[];
+        setState: React.Dispatch<any>;
+    }
 }
 
 export default function SubPanel(props: Props) {
@@ -78,17 +83,17 @@ export default function SubPanel(props: Props) {
     // console.log("savedGroupsItems mapped", savedGroupsItems,)
 
 
-    function hundleChangeKeyword(e){
+    function hundleChangeKeyword(e) {
         setStateKeyword(e.target.value)
     }
-    function hundleChangeGroup(e){
+    function hundleChangeGroup(e) {
         setStateGroup(e.target.value)
     }
 
 
-// ==== SAVE BUTTON ============
+    // ==== SAVE BUTTON ============
 
-    function hundleClickAllUnsaved(){
+    function hundleClickAllUnsaved() {
 
     }
 
@@ -98,7 +103,7 @@ export default function SubPanel(props: Props) {
         <div className={objToClassname(props.cssStyle)}>
             <ButtonToolbar className='h-25 p-1'>
                 <ButtonGroup className='me-1'>
-                    <Button variant="dark" onClick={hundleClickUnsaved}>Select all unsaved</Button>
+                    <Button variant="dark" onClick={hundleClickAllUnsaved}>Select all unsaved</Button>
                     <Button variant="light">Sellect all</Button>
                     <Button variant="light">Deselect all</Button>
                 </ButtonGroup>

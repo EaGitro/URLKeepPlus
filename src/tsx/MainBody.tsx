@@ -35,7 +35,7 @@ export default function MainBody(props: Props) {
      */
 
     // let tabInfos: any[] = [];
-    // let [state, setState] = useState([0]);
+    // let [state, setDataObj] = useState([0]);
 
     // console.log("MainBody");
 
@@ -63,7 +63,7 @@ export default function MainBody(props: Props) {
     //     console.log(lightenedTabs);
 
     //     tabInfos = lightenedTabs;
-    //     setState(tabInfos);
+    //     setDataObj(tabInfos);
     // }
 
     // function getCurrentTabs() {
@@ -84,7 +84,7 @@ export default function MainBody(props: Props) {
 
 
     let tmp: any[] = []
-    let [dataObjState, setState] = useState({
+    let [dataObjState, setDataObj] = useState({
         keywordList: tmp,
         groupList: tmp,
         mainDataObj: {}
@@ -120,7 +120,7 @@ export default function MainBody(props: Props) {
 
             console.log("promise", await getStrage_promise(null));
 
-            setState({
+            setDataObj({
                 keywordList: await getStrage_promise("keywordList"),
                 groupList: await getStrage_promise("groupList"),
                 mainDataObj: await getStrage_promise("mainDataObj")
@@ -144,7 +144,7 @@ export default function MainBody(props: Props) {
                         />
                     </Col>
                     <Col xs={"9"} className={objToClassname({ padding: 'p-0', height: 'h-100', border: { position: 'border', addition: 'border-info border-1' }, rounded: 'rounded' })}>
-                        <MainMenu storagedData={dataObjState} />
+                        <MainMenu storagedData={dataObjState} setDataObjFunc={setDataObj}/>
                         {/* <MainMenu tabsInfo={tabInfos} /> */}
                     </Col>
                 </Row>

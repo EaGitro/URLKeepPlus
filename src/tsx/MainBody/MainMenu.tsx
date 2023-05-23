@@ -13,6 +13,7 @@ import { useState, useEffect } from 'react';
 
 type Props = {
     storagedData: StoragedData;
+    setDataObjFunc: React.Dispatch<any>;
 }
 
 export default function MainMenu(props: Props) {
@@ -21,9 +22,9 @@ export default function MainMenu(props: Props) {
      */
 
     console.log("MainMenu props", props, props.storagedData.mainDataObj)
-    let tmp: any[] = []
+    let tmpArrType: any[] = []
     let tabInfos: any[] = [];
-    let [state, setState] = useState(tmp);
+    let [tabsInfoState, setTabsInfo] = useState(tmpArrType);
 
     console.log("MainBody");
 
@@ -51,7 +52,7 @@ export default function MainMenu(props: Props) {
         console.log(lightenedTabs);
 
         tabInfos = lightenedTabs;
-        setState(tabInfos);
+        setTabsInfo(tabInfos);
     }
 
     function getCurrentTabs() {
@@ -72,17 +73,39 @@ export default function MainMenu(props: Props) {
      * receive which check boxs are selected from MainPanel and send state to MainPanel(for receiving), to SubPanel(for save) 
      */
 
+    type SelectedButtonType = 'SAU' | 'SA' | 'DA' | 'SAVE';
+
+    let [whichButton, setWhichButton] = useState<SelectedButtonType>('DA');
+
+    let [keywordGroupMemoState, setKGM] = useState({
+        keyword: "",
+        group: "",
+        memo: ""
+    });
+
+
+    let [selectedCheckBoxState, setSelectedCheckBox] = useState(tmpArrType);
+
+
+
+
 
     return (
         <>
             <MainPanel
                 cssStyle={{ height: 'h-75', overflow: 'overflow-auto' }}
-                tabsInfo={state}
+                tabsInfo={tabsInfoState}
                 storagedData={props.storagedData}
+                setDataObjFunc={props.setDataObjFunc}
+                whichButtonState={whichButton}
+                selectedCheckBox={{state: selectedCheckBoxState, setState: setSelectedCheckBox}}
             />
             <SubPanel
                 cssStyle={{ height: 'h-25', border: { position: 'border', addition: 'border-info border-2' }, rounded: 'rounded' }}
                 storagedData={props.storagedData}
+                setDataObjFunc={props.setDataObjFunc}
+                // setWhichButtonFunc={setWhichButton}
+                selectedCheckBox={{state: selectedCheckBoxState, setState: setSelectedCheckBox}}
             />
         </>
     )

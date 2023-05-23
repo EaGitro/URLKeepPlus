@@ -11,7 +11,7 @@ import objToString from '~/src/utilities/objTostring';
 import { useState, useEffect } from 'react';
 import { TabInfoObj } from '~/src/tsTypes/tabInfoTypes';
 import Container from 'react-bootstrap/Container';
-import Row  from 'react-bootstrap/Row';
+import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { StoragedData } from '~/src/tsTypes/propsTypes';
 import getStrage_promise from '~/src/utilities/getStorage_promise';
@@ -24,6 +24,12 @@ type Props = {
     cssStyle: CssStyle;
     tabsInfo: TabInfoObj[];
     storagedData: StoragedData;
+    setDataObjFunc: React.Dispatch<any>;
+    whichButtonState: 'SAU' | 'SA' | 'DA' | 'SAVE';
+    selectedCheckBox: {
+        state: any[];
+        setState: React.Dispatch<any>;
+    }
 }
 
 // tmp();
@@ -72,8 +78,36 @@ export default function MainPanel(props: Props) {
     let stragedUrls = Object.keys(props.storagedData.mainDataObj).map((dateAndUrl) => {
         return dateAndUrl.split(" ")[1]
     })
+    // let tmpArrType: any[] = [];
+    // let [selectedCheckBoxState, setSelectedCheckBox] = useState(tmpArrType);
 
+    function hundleChangeCheckBox(e) {
+        // console.log(e);
+        // console.log(e.target);
+        // console.log(e.target.id)
+        // console.log("selectedCheckBoxState", selectedCheckBoxState)
+        // console.log(e.target.checked)
+        let tmpSCBArr = props.selectedCheckBox.state;
+        if (e.target.checked) {
+            // console.log(1)
 
+            let indexofSelectedCheckBox = tmpSCBArr.indexOf(e.target.id)
+            if (indexofSelectedCheckBox != -1) {
+                tmpSCBArr.splice(indexofSelectedCheckBox);
+                props.selectedCheckBox.setState(tmpSCBArr)
+                // setSelectedCheckBox(tmpSCBArr);
+            }
+        } else {
+            // console.log(2)
+
+            tmpSCBArr.push(e.target.id);
+            props.selectedCheckBox.setState(tmpSCBArr)
+            // setSelectedCheckBox(tmpSCBArr);
+            // console.log("selectedCheckBoxState", selectedCheckBoxState)
+        }
+    }
+
+    // console.log("selectedCheckBoxState", selectedCheckBoxState);
 
     console.log(props.tabsInfo)
 
@@ -84,7 +118,23 @@ export default function MainPanel(props: Props) {
             <Container className='list-group-item list-group-item-action w-100' key={tabsInfoObj.id}>
                 <Row className='flex-nowrap w-100 m-0 p-0' >
                     <Col xs={1}>
-                        <input className="form-check-input" type="checkbox" value="" id={String(tabsInfoObj.id)} />
+                        <input className="form-check-input" type="checkbox"
+                            value={tabsInfoObj.id}
+                            // checked={
+                            //     (() => {
+                            //         console.log(tabsInfoObj.id in selectedCheckBoxState);
+                            //         if (tabsInfoObj.id in selectedCheckBoxState) {
+                            //             console.log("into true")
+                            //             return true
+                            //         } else {
+                            //             console.log("into false")
+                            //             return false
+                            //         }
+                            //     })()
+                            // }
+                            onChange={hundleChangeCheckBox}
+                            id={String(tabsInfoObj.id)}
+                        />
                     </Col>
                     <Col xs={1}>
                         {(() => {
@@ -114,7 +164,7 @@ export default function MainPanel(props: Props) {
     })
 
 
-    
+
 
     console.log("MainPanel", props.tabsInfo)
     return (
