@@ -114,14 +114,18 @@ export default function MainPanel(props: Props) {
 
     function hundleChangeCheckBox(e){
         // let 
+        
         let selectedSet = new Set(props.selectedCheckBox.state)
-        if(selectedSet.has(e.target.value)){
-            selectedSet.delete(e.target.value);
-            props.selectedCheckBox.setState(selectedSet)
+        if(selectedSet.has(Number(e.target.value))){
+            console.log("selectedSet has")
+            selectedSet.delete(Number(e.target.value));
+            props.selectedCheckBox.setState(selectedSet);
         }else{
-            selectedSet.add(e.target.value);
+            console.log("selectedSet else")
+            selectedSet.add(Number(e.target.value));
             props.selectedCheckBox.setState(selectedSet);
         }
+        console.log("selectedSet", selectedSet);
     }
 
 
