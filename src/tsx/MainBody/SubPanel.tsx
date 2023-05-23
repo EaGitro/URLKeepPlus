@@ -11,6 +11,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 
 import { StoragedData } from '~/src/tsTypes/propsTypes';
+import { TabInfoObj } from '~/src/tsTypes/tabInfoTypes';
 import { CssStyle } from '~/src/tsTypes/styleTypes'
 
 
@@ -19,13 +20,19 @@ type Props = {
     cssStyle: CssStyle;
     storagedData: StoragedData;
     setDataObjFunc: React.Dispatch<any>;
+    tabsInfo: TabInfoObj[];
     selectedCheckBox: {
-        state: any[];
+        state: Set<any>;
         setState: React.Dispatch<any>;
     }
 }
 
 export default function SubPanel(props: Props) {
+
+    /**
+     * ========= Keyword Group Memo ===================== 
+     */
+
 
     let [stateKeywordInputtedVal, setStateKeyword] = useState("");
     let [stateGroupInputtedVal, setStateGroup] = useState("");
@@ -36,6 +43,12 @@ export default function SubPanel(props: Props) {
     console.log("subpanel prosps", props)
     // let selectedKeyword: string = "";
     // let selectedGroup: string = "";
+
+    /**
+     * make <li> list children of `savedKeywordsItems` and `savedGroupsItems`
+     */
+
+
     let savedGroupsItems = props.storagedData.groupList;
     let savedKeywordsItems = props.storagedData.keywordList;
 
@@ -48,10 +61,7 @@ export default function SubPanel(props: Props) {
         savedGroupsItems = ["null"];
     }
 
-    // console.log("savedGroupsItems arr", props.storagedData.groupList)
 
-
-    // console.log("savedKeywordsItems", savedKeywordsItems, savedKeywordsItems[0])
     savedKeywordsItems = savedKeywordsItems.map((x) => {
         function itemOnclick() {
             console.log("savedKeywords clicked")
@@ -65,10 +75,6 @@ export default function SubPanel(props: Props) {
 
     console.log("savedKeywordsItems mapped", savedKeywordsItems)
 
-    // console.log("savedKeywordsItems arr", props.storagedData.keywordList)
-
-    // window.windowGroup = savedGroupsItems;
-    // console.log("savedGroupsItems", savedGroupsItems,["null"].map((x)=>{return 1}), [savedGroupsItems].map((x)=>{return 1}))
     savedGroupsItems = savedGroupsItems.map((x) => {
         function itemOnclick() {
             console.log("savedGroups clicked");
@@ -83,6 +89,12 @@ export default function SubPanel(props: Props) {
     // console.log("savedGroupsItems mapped", savedGroupsItems,)
 
 
+
+    /**
+     * hundle function of inputKeyword and inputGroup
+     */
+
+
     function hundleChangeKeyword(e) {
         setStateKeyword(e.target.value)
     }
@@ -91,10 +103,41 @@ export default function SubPanel(props: Props) {
     }
 
 
-    // ==== SAVE BUTTON ============
+
+
+
+
+    /**
+     * ======= SAVE BUTTON =========
+     */
+
+
+    /**
+     * which box are selected
+     */
+
+
+    let stragedUrls = Object.keys(props.storagedData.mainDataObj).map((dateAndUrl) => {
+        return dateAndUrl.split(" ")[1]
+    })
+
+
+
+    /**
+     * chackbox select button hundle func
+     */
 
     function hundleClickAllUnsaved() {
 
+        let unsavedIds = props.tabsInfo.map((tabsInfoObj)=>{
+            if(!(tabsInfoObj.url in stragedUrls)){
+                
+                return tabsInfoObj.id;
+            }
+
+        })
+        console.log("unsavedIds", unsavedIds)
+        props.selectedCheckBox.setState(unsavedIds)
     }
 
 

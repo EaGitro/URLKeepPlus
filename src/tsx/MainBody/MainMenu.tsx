@@ -84,7 +84,7 @@ export default function MainMenu(props: Props) {
     });
 
 
-    let [selectedCheckBoxState, setSelectedCheckBox] = useState(tmpArrType);
+    let [selectedCheckBoxState, setSelectedCheckBox] = useState(new Set());
 
 
 
@@ -105,6 +105,7 @@ export default function MainMenu(props: Props) {
                 storagedData={props.storagedData}
                 setDataObjFunc={props.setDataObjFunc}
                 // setWhichButtonFunc={setWhichButton}
+                tabsInfo={tabsInfoState}
                 selectedCheckBox={{state: selectedCheckBoxState, setState: setSelectedCheckBox}}
             />
         </>

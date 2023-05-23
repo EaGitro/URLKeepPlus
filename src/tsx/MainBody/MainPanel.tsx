@@ -27,7 +27,7 @@ type Props = {
     setDataObjFunc: React.Dispatch<any>;
     whichButtonState: 'SAU' | 'SA' | 'DA' | 'SAVE';
     selectedCheckBox: {
-        state: any[];
+        state: Set<any>;
         setState: React.Dispatch<any>;
     }
 }
@@ -81,33 +81,49 @@ export default function MainPanel(props: Props) {
     // let tmpArrType: any[] = [];
     // let [selectedCheckBoxState, setSelectedCheckBox] = useState(tmpArrType);
 
-    function hundleChangeCheckBox(e) {
-        // console.log(e);
-        // console.log(e.target);
-        // console.log(e.target.id)
-        // console.log("selectedCheckBoxState", selectedCheckBoxState)
-        // console.log(e.target.checked)
-        let tmpSCBArr = props.selectedCheckBox.state;
-        if (e.target.checked) {
-            // console.log(1)
+    // function hundleChangeCheckBox(e) {
+    //     // console.log(e);
+    //     // console.log(e.target);
+    //     // console.log(e.target.id)
+    //     // console.log("selectedCheckBoxState", selectedCheckBoxState)
+    //     // console.log(e.target.checked)
+    //     let tmpSCBArr = props.selectedCheckBox.state;
+    //     if (e.target.checked) {
+    //         // console.log(1)
 
-            let indexofSelectedCheckBox = tmpSCBArr.indexOf(e.target.id)
-            if (indexofSelectedCheckBox != -1) {
-                tmpSCBArr.splice(indexofSelectedCheckBox);
-                props.selectedCheckBox.setState(tmpSCBArr)
-                // setSelectedCheckBox(tmpSCBArr);
-            }
-        } else {
-            // console.log(2)
+    //         let indexofSelectedCheckBox = tmpSCBArr.indexOf(e.target.id)
+    //         if (indexofSelectedCheckBox != -1) {
+    //             tmpSCBArr.splice(indexofSelectedCheckBox);
+    //             props.selectedCheckBox.setState(tmpSCBArr)
+    //             // setSelectedCheckBox(tmpSCBArr);
+    //         }
+    //     } else {
+    //         // console.log(2)
 
-            tmpSCBArr.push(e.target.id);
-            props.selectedCheckBox.setState(tmpSCBArr)
-            // setSelectedCheckBox(tmpSCBArr);
-            // console.log("selectedCheckBoxState", selectedCheckBoxState)
+    //         tmpSCBArr.push(e.target.id);
+    //         props.selectedCheckBox.setState(tmpSCBArr)
+
+    //         // setSelectedCheckBox(tmpSCBArr);
+    //         // console.log("selectedCheckBoxState", selectedCheckBoxState)
+    //     }
+
+    //     e.target.checked = ! e.target.checked
+    // }
+
+    // // console.log("selectedCheckBoxState", selectedCheckBoxState);
+
+    function hundleChangeCheckBox(e){
+        // let 
+        let selectedSet = new Set(props.selectedCheckBox.state)
+        if(selectedSet.has(e.target.value)){
+            selectedSet.delete(e.target.value);
+            props.selectedCheckBox.setState(selectedSet)
+        }else{
+            selectedSet.add(e.target.value);
+            props.selectedCheckBox.setState(selectedSet);
         }
     }
 
-    // console.log("selectedCheckBoxState", selectedCheckBoxState);
 
     console.log(props.tabsInfo)
 
@@ -120,20 +136,9 @@ export default function MainPanel(props: Props) {
                     <Col xs={1}>
                         <input className="form-check-input" type="checkbox"
                             value={tabsInfoObj.id}
-                            // checked={
-                            //     (() => {
-                            //         console.log(tabsInfoObj.id in selectedCheckBoxState);
-                            //         if (tabsInfoObj.id in selectedCheckBoxState) {
-                            //             console.log("into true")
-                            //             return true
-                            //         } else {
-                            //             console.log("into false")
-                            //             return false
-                            //         }
-                            //     })()
-                            // }
                             onChange={hundleChangeCheckBox}
                             id={String(tabsInfoObj.id)}
+                            checked={props.selectedCheckBox.state.has(tabsInfoObj.id)}
                         />
                     </Col>
                     <Col xs={1}>
