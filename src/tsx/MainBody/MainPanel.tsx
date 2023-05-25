@@ -81,10 +81,14 @@ export default function MainPanel(props: Props) {
 
 
     let storagedUrls = Object.keys(props.storagedData.mainDataObj).map((dateAndUrl) => {
+        console.log("dateAndUrl",dateAndUrl);
         let shortenUrl =  dateAndUrl.split(" ")[2]
+        
         let revertedurl = encodeURI(shortenUrl);
         return revertedurl
     })
+
+    console.log("storagedUrls",storagedUrls);
     // let tmpArrType: any[] = [];
     // let [selectedCheckBoxState, setSelectedCheckBox] = useState(tmpArrType);
 
@@ -159,7 +163,7 @@ export default function MainPanel(props: Props) {
                     </Col>
                     <Col xs={1}>
                         {(() => {
-                            if (tabsInfoObj.url in storagedUrls) {
+                            if (storagedUrls.includes(tabsInfoObj.url)) {
                                 return "saved"
                             }
                         })()}

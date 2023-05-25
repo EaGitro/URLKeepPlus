@@ -109,9 +109,11 @@ export default function MainBody(props: Props) {
     useEffect(() => {
         const getMainData = async () => {
             console.log("getMainData")
-            let getDefault: {
-                [K: string]: any;
-            } = await getStorage_promise(null);
+            let getDefault
+                // : {
+                //     [K: string]: any;
+                // }
+                = await getStorage_promise(null);
 
             // set default data
             if (!(Object.keys(getDefault).includes("keywordList"))) {
@@ -131,6 +133,13 @@ export default function MainBody(props: Props) {
 
             console.log("promise", await getStorage_promise(null));
 
+            let objForSetDataObj = {
+                keywordList: await getStorage_promise("keywordList"),
+                groupObj: await getStorage_promise("groupObj"),
+                mainDataObj: await getStorage_promise("mainDataObj")
+            }
+            console.log("objForSetDataObj",objForSetDataObj);
+
             // set state
             setDataObj({
                 keywordList: await getStorage_promise("keywordList"),
@@ -144,7 +153,7 @@ export default function MainBody(props: Props) {
 
     console.log("promise", getStorage_promise(null));
 
-    console.log("dataObjDtate",dataObjState);
+    console.log("dataObjDtate", dataObjState);
 
     return (
         <div className={objToClassname(props.cssStyle)}>
@@ -156,7 +165,7 @@ export default function MainBody(props: Props) {
                         />
                     </Col>
                     <Col xs={"9"} className={objToClassname({ padding: 'p-0', height: 'h-100', border: { position: 'border', addition: 'border-info border-1' }, rounded: 'rounded' })}>
-                        <MainMenu storagedData={dataObjState} setDataObjFunc={setDataObj}/>
+                        <MainMenu storagedData={dataObjState} setDataObjFunc={setDataObj} />
                         {/* <MainMenu tabsInfo={tabInfos} /> */}
                     </Col>
                 </Row>
