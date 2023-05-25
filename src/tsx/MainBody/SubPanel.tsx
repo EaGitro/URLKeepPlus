@@ -3,6 +3,11 @@ import React from 'react';
 import { useState } from 'react';
 
 import objToClassname from '~/src/utilities/objToClassname';
+import formatDataForSave from '~/src/utilities/formatDataForSave';
+import formatDateObjForDataKey from '~/src/utilities/formatDateObjForDataKey';
+import shortenUrl from '~/src/utilities/shortenUrl';
+import getStrage_promise from '~/src/utilities/getStorage_promise';
+
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -13,6 +18,7 @@ import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import { StoragedData } from '~/src/tsTypes/propsTypes';
 import { TabInfoObj } from '~/src/tsTypes/tabInfoTypes';
 import { CssStyle } from '~/src/tsTypes/styleTypes'
+import { tmp } from '~/src/tsTypes/tmp';
 
 
 
@@ -36,6 +42,7 @@ export default function SubPanel(props: Props) {
 
     let [stateKeywordInputtedVal, setStateKeyword] = useState("");
     let [stateGroupInputtedVal, setStateGroup] = useState("");
+    let [stateNoteInputtedVal, setStateNote] = useState("");
 
 
     // window.windowSubpanelProps = props;
@@ -54,11 +61,11 @@ export default function SubPanel(props: Props) {
 
     if (savedKeywordsItems.length == 0) {
         console.log("null keywords")
-        savedKeywordsItems = ["null"];
+        savedKeywordsItems = [null];
     }
-    if (savedGroupsItems.length == 0) {
+    if (Object.keys(savedGroupsItems).length == 0) {
         console.log("null groups")
-        savedGroupsItems = ["null"];
+        savedGroupsItems = [null];
     }
 
 
@@ -75,7 +82,7 @@ export default function SubPanel(props: Props) {
 
     console.log("savedKeywordsItems mapped", savedKeywordsItems)
 
-    savedGroupsItems = savedGroupsItems.map((x) => {
+    savedGroupsItems = Object.keys(savedGroupsItems).map((x) => {
         function itemOnclick() {
             console.log("savedGroups clicked");
             setStateGroup(x);
@@ -91,17 +98,19 @@ export default function SubPanel(props: Props) {
 
 
     /**
-     * hundle function of inputKeyword and inputGroup
+     * handle function of inputKeyword and inputGroup 
      */
 
 
-    function hundleChangeKeyword(e) {
+    function handleChangeKeyword(e) {
         setStateKeyword(e.target.value)
     }
-    function hundleChangeGroup(e) {
+    function handleChangeGroup(e) {
         setStateGroup(e.target.value)
     }
-
+    function handleChangeNote(e) {
+        setStateNote(e.target.value)
+    }
 
 
 
@@ -124,20 +133,106 @@ export default function SubPanel(props: Props) {
 
 
     /**
-     * chackbox select button hundle func
+     * chackbox select button handle func
      */
 
-    function hundleClickAllUnsaved() {
+    function handleClickAllUnsaved() {
+        let unsavedIds = props.tabsInfo.map((tabsInfoObj) => {
+            if (!(stragedUrls.includes(tabsInfoObj.url))) {
 
-        let unsavedIds = props.tabsInfo.map((tabsInfoObj)=>{
-            if(!(tabsInfoObj.url in stragedUrls)){
-                
                 return tabsInfoObj.id;
             }
 
         })
         console.log("unsavedIds", unsavedIds)
-        props.selectedCheckBox.setState(unsavedIds)
+        let unsavedIdaSet = new Set(unsavedIds);
+        if(unsavedIdaSet.has(undefined)){
+            unsavedIdaSet.delete(undefined)
+        }
+        props.selectedCheckBox.setState(unsavedIdaSet);
+    }
+
+    function handleClickSelectAll() {
+        let allIds = props.tabsInfo.map((tabsInfoObj) => {
+            return tabsInfoObj.id;
+        })
+        let selectAllSet = new Set(allIds);
+        props.selectedCheckBox.setState(selectAllSet);
+    }
+
+    function handleClickDeselectAll() {
+        let nullSet = new Set();
+        props.selectedCheckBox.setState(nullSet);
+    }
+
+
+    /**
+     * save button handle func
+     */
+
+
+    function handleClickSave() {
+        let idsSetForSave = props.selectedCheckBox.state;
+        if(idsSetForSave.size==0){
+            window.alert("Nothing has been selected.")
+            return
+        }
+        let dataArrForSave = props.tabsInfo.map((tabsInfoObj) => {    // [{formattedForSaveData}, {}, {}]
+            if (idsSetForSave.has(tabsInfoObj.id)) {
+                let element = formatDataForSave(            // formatted each data to save
+                    formatDateObjForDataKey(new Date()),
+                    shortenUrl(tabsInfoObj.url),
+                    tabsInfoObj.title,
+                    stateKeywordInputtedVal,
+                    [stateGroupInputtedVal],
+                    stateNoteInputtedVal,
+                    {}
+                )
+                return element;
+            }
+        })
+
+        let tmpSet= new Set(dataArrForSave);
+        if(tmpSet.has(undefined)){
+            tmpSet.delete(undefined)
+        }
+        dataArrForSave = [...tmpSet]
+        console.log("dataArrForSave",dataArrForSave)
+        let isConfirmed = window.confirm(`Save ${dataArrForSave.length} items ?`)
+        console.log("comfirmed", isConfirmed)
+        if (isConfirmed) {
+            console.log("conf")
+            let msg = `${dataArrForSave.length} items\n`;
+            if (!(props.storagedData.keywordList.includes(stateKeywordInputtedVal))&& (!(stateKeywordInputtedVal==""))) {
+                msg += `new keyword \"${stateKeywordInputtedVal}\"\n`
+            }
+            if (!(props.storagedData.groupList.includes(stateGroupInputtedVal))&& (!(stateGroupInputtedVal==""))){
+                msg += `new group \"${stateGroupInputtedVal}\"\n`
+            }
+            msg+="  have been registered"
+            window.alert(msg);
+
+
+            /**
+             * save main data
+             */
+
+            const setMainData = async () => {
+
+                
+                let dataObjForSave = { ...dataArrForSave };
+                let prevKeyword = await getStrage_promise("keywordList");
+
+
+
+            }
+
+
+        } else {
+            window.alert("Canceled");
+            return;
+        }
+
     }
 
 
@@ -146,13 +241,13 @@ export default function SubPanel(props: Props) {
         <div className={objToClassname(props.cssStyle)}>
             <ButtonToolbar className='h-25 p-1'>
                 <ButtonGroup className='me-1'>
-                    <Button variant="dark" onClick={hundleClickAllUnsaved}>Select all unsaved</Button>
-                    <Button variant="light">Sellect all</Button>
-                    <Button variant="light">Deselect all</Button>
+                    <Button variant="dark" onClick={handleClickAllUnsaved}>Select all unsaved</Button>
+                    <Button variant="light" onClick={handleClickSelectAll}>Sellect all</Button>
+                    <Button variant="light" onClick={handleClickDeselectAll}>Deselect all</Button>
                 </ButtonGroup>
 
                 <ButtonGroup className='w-20 ms-5'>
-                    <Button variant='primary'>SAVE</Button>
+                    <Button variant='primary' onClick={handleClickSave}>SAVE</Button>
                 </ButtonGroup>
 
             </ButtonToolbar>
@@ -163,7 +258,7 @@ export default function SubPanel(props: Props) {
                 <Row className='h-100'>
                     <Col xs={4} className='h-100'>
                         <div className='w-100 h-30'>
-                            <input id='inputKeyword' placeholder="Keyword" value={stateKeywordInputtedVal} onChange={hundleChangeKeyword}></input>
+                            <input id='inputKeyword' placeholder="Keyword" value={stateKeywordInputtedVal} onChange={handleChangeKeyword}></input>
 
                         </div>
                         <div className='w-100 h-65 overflow-auto'>
@@ -174,7 +269,7 @@ export default function SubPanel(props: Props) {
                     </Col>
                     <Col xs={4} className='h-100'>
                         <div className='w-100 h-30'>
-                            <input id='inputGroup' placeholder="Group" value={stateGroupInputtedVal} onChange={hundleChangeGroup}></input>
+                            <input id='inputGroup' placeholder="Group" value={stateGroupInputtedVal} onChange={handleChangeGroup}></input>
 
                         </div>
                         <div className='w-100 h-65 overflow-auto'>
@@ -185,7 +280,7 @@ export default function SubPanel(props: Props) {
                     </Col>
                     <Col xs={4} className='h-100'>
                         <div className='w-100 h-100'>
-                            <textarea placeholder='note' className='h-90 w-80'></textarea>
+                            <textarea placeholder='note' className='h-90 w-80' value={stateNoteInputtedVal} onChange={handleChangeNote}></textarea>
                         </div>
 
                     </Col>

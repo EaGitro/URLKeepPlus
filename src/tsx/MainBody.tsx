@@ -13,6 +13,7 @@ import MainMenu from '~/src/tsx/MainBody/MainMenu'
 // import {CssHeight} from '../tsTypes/styleTypes'
 
 import { CssStyle } from '~/src/tsTypes/styleTypes'
+import { StoragedData } from '~/src/tsTypes/propsTypes';
 // import { TabInfoObj } from '~/src/tsTypes/tabInfoTypes';
 // import getCurrentTabs from '~/src/utilities/getCurrentTabs';
 
@@ -82,11 +83,15 @@ export default function MainBody(props: Props) {
 
     // =================================================
 
+    /**
+     * manage saved data (dataObjState)
+     */
 
-    let tmp: any[] = []
-    let [dataObjState, setDataObj] = useState({
-        keywordList: tmp,
-        groupList: tmp,
+
+    // let tmp: any[] = []
+    let [dataObjState, setDataObj] = useState<StoragedData>({
+        keywordList: new Set(),
+        groupList: {},
         mainDataObj: {}
     });
 
@@ -99,6 +104,8 @@ export default function MainBody(props: Props) {
     //     return
     // }
 
+
+
     useEffect(() => {
         const getMainData = async () => {
             console.log("getMainData")
@@ -106,12 +113,13 @@ export default function MainBody(props: Props) {
                 [K: string]: any;
             } = await getStrage_promise(null);
 
+            // set default data
             if (!(Object.keys(getDefault).includes("keywordList"))) {
                 await setStrage_promise({ "keywordList": [] })
             }
 
             if (!(Object.keys(getDefault).includes("groupList"))) {
-                await setStrage_promise({ "groupList": [1, 2] })
+                await setStrage_promise({ "groupList": {} })
             }
 
             if (!(Object.keys(getDefault).includes("mainDataObj"))) {
@@ -120,6 +128,7 @@ export default function MainBody(props: Props) {
 
             console.log("promise", await getStrage_promise(null));
 
+            // set state
             setDataObj({
                 keywordList: await getStrage_promise("keywordList"),
                 groupList: await getStrage_promise("groupList"),

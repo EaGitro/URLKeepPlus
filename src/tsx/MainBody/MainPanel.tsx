@@ -75,13 +75,18 @@ export default function MainPanel(props: Props) {
     //     getMainData();
     // }, [])
 
+    /**
+     * generate straged urls arr
+     */
+
+
     let stragedUrls = Object.keys(props.storagedData.mainDataObj).map((dateAndUrl) => {
         return dateAndUrl.split(" ")[1]
     })
     // let tmpArrType: any[] = [];
     // let [selectedCheckBoxState, setSelectedCheckBox] = useState(tmpArrType);
 
-    // function hundleChangeCheckBox(e) {
+    // function handleChangeCheckBox(e) {
     //     // console.log(e);
     //     // console.log(e.target);
     //     // console.log(e.target.id)
@@ -112,7 +117,12 @@ export default function MainPanel(props: Props) {
 
     // // console.log("selectedCheckBoxState", selectedCheckBoxState);
 
-    function hundleChangeCheckBox(e){
+    /**
+     * handle func for each checkbox
+     */
+
+
+    function handleChangeCheckBox(e){
         // let 
         
         let selectedSet = new Set(props.selectedCheckBox.state)
@@ -140,7 +150,7 @@ export default function MainPanel(props: Props) {
                     <Col xs={1}>
                         <input className="form-check-input" type="checkbox"
                             value={tabsInfoObj.id}
-                            onChange={hundleChangeCheckBox}
+                            onChange={handleChangeCheckBox}
                             id={String(tabsInfoObj.id)}
                             checked={props.selectedCheckBox.state.has(tabsInfoObj.id)}
                         />
