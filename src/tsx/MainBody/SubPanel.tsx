@@ -6,7 +6,8 @@ import objToClassname from '~/src/utilities/objToClassname';
 import formatDataForSave from '~/src/utilities/formatDataForSave';
 import formatDateObjForDataKey from '~/src/utilities/formatDateObjForDataKey';
 import shortenUrl from '~/src/utilities/shortenUrl';
-import getStrage_promise from '~/src/utilities/getStorage_promise';
+import getStorage_promise from '~/src/utilities/getStorage_promise';
+import setStorage_promise from '~/src/utilities/setStorage_promise';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -19,13 +20,15 @@ import { StoragedData } from '~/src/tsTypes/propsTypes';
 import { TabInfoObj } from '~/src/tsTypes/tabInfoTypes';
 import { CssStyle } from '~/src/tsTypes/styleTypes'
 import { tmp } from '~/src/tsTypes/tmp';
+import { SavedDataFormatProperties, SavedDataFormatKey, VersionDigit } from "../tsTypes/SavedDataFormat";
+
 
 
 
 type Props = {
     cssStyle: CssStyle;
     storagedData: StoragedData;
-    setDataObjFunc: React.Dispatch<any>;
+    setDataObjFunc: React.Dispatch<React.SetStateAction<StoragedData>>;
     tabsInfo: TabInfoObj[];
     selectedCheckBox: {
         state: Set<any>;
@@ -56,20 +59,19 @@ export default function SubPanel(props: Props) {
      */
 
 
-    let savedGroupsItems = props.storagedData.groupList;
+    let savedGroupsItems = props.storagedData.groupObj;
     let savedKeywordsItems = props.storagedData.keywordList;
 
     if (savedKeywordsItems.length == 0) {
         console.log("null keywords")
-        savedKeywordsItems = [null];
     }
     if (Object.keys(savedGroupsItems).length == 0) {
         console.log("null groups")
-        savedGroupsItems = [null];
+        // savedGroupsItems = [null];
     }
 
 
-    savedKeywordsItems = savedKeywordsItems.map((x) => {
+    let savedKeywordsItemsElements = savedKeywordsItems.map((x) => {
         function itemOnclick() {
             console.log("savedKeywords clicked")
             setStateKeyword(x);
@@ -82,7 +84,7 @@ export default function SubPanel(props: Props) {
 
     console.log("savedKeywordsItems mapped", savedKeywordsItems)
 
-    savedGroupsItems = Object.keys(savedGroupsItems).map((x) => {
+    let savedGroupsItemsElements = Object.keys(savedGroupsItems).map((x) => {
         function itemOnclick() {
             console.log("savedGroups clicked");
             setStateGroup(x);
@@ -93,7 +95,7 @@ export default function SubPanel(props: Props) {
             <li className='list-group-item list-group-item-action panel-list-item' key={x} onClick={itemOnclick}>{x}</li>
         )
     })
-    // console.log("savedGroupsItems mapped", savedGroupsItems,)
+    console.log("savedGroupsItems mapped", savedGroupsItems)
 
 
 
@@ -126,8 +128,8 @@ export default function SubPanel(props: Props) {
      */
 
 
-    let stragedUrls = Object.keys(props.storagedData.mainDataObj).map((dateAndUrl) => {
-        return dateAndUrl.split(" ")[1]
+    let storagedUrls = Object.keys(props.storagedData.mainDataObj).map((dateAndUrl) => {
+        return dateAndUrl.split(" ")[2]
     })
 
 
@@ -138,7 +140,7 @@ export default function SubPanel(props: Props) {
 
     function handleClickAllUnsaved() {
         let unsavedIds = props.tabsInfo.map((tabsInfoObj) => {
-            if (!(stragedUrls.includes(tabsInfoObj.url))) {
+            if (!(storagedUrls.includes(tabsInfoObj.url))) {
 
                 return tabsInfoObj.id;
             }
@@ -146,7 +148,7 @@ export default function SubPanel(props: Props) {
         })
         console.log("unsavedIds", unsavedIds)
         let unsavedIdaSet = new Set(unsavedIds);
-        if(unsavedIdaSet.has(undefined)){
+        if (unsavedIdaSet.has(undefined)) {
             unsavedIdaSet.delete(undefined)
         }
         props.selectedCheckBox.setState(unsavedIdaSet);
@@ -173,11 +175,13 @@ export default function SubPanel(props: Props) {
 
     function handleClickSave() {
         let idsSetForSave = props.selectedCheckBox.state;
-        if(idsSetForSave.size==0){
+        if (idsSetForSave.size == 0) {
             window.alert("Nothing has been selected.")
             return
         }
-        let dataArrForSave = props.tabsInfo.map((tabsInfoObj) => {    // [{formattedForSaveData}, {}, {}]
+
+        let dataObjForSave: { SavedDataFormatKey: SavedDataFormatProperties } | {} = {};
+        for (let tabsInfoObj of props.tabsInfo) {
             if (idsSetForSave.has(tabsInfoObj.id)) {
                 let element = formatDataForSave(            // formatted each data to save
                     formatDateObjForDataKey(new Date()),
@@ -188,107 +192,137 @@ export default function SubPanel(props: Props) {
                     stateNoteInputtedVal,
                     {}
                 )
-                return element;
+
+                dataObjForSave[element[0]] = element[1]
             }
-        })
-
-        let tmpSet= new Set(dataArrForSave);
-        if(tmpSet.has(undefined)){
-            tmpSet.delete(undefined)
-        }
-        dataArrForSave = [...tmpSet]
-        console.log("dataArrForSave",dataArrForSave)
-        let isConfirmed = window.confirm(`Save ${dataArrForSave.length} items ?`)
-        console.log("comfirmed", isConfirmed)
-        if (isConfirmed) {
-            console.log("conf")
-            let msg = `${dataArrForSave.length} items\n`;
-            if (!(props.storagedData.keywordList.includes(stateKeywordInputtedVal))&& (!(stateKeywordInputtedVal==""))) {
-                msg += `new keyword \"${stateKeywordInputtedVal}\"\n`
-            }
-            if (!(props.storagedData.groupList.includes(stateGroupInputtedVal))&& (!(stateGroupInputtedVal==""))){
-                msg += `new group \"${stateGroupInputtedVal}\"\n`
-            }
-            msg+="  have been registered"
-            window.alert(msg);
-
-
-            /**
-             * save main data
-             */
-
-            const setMainData = async () => {
-
-                
-                let dataObjForSave = { ...dataArrForSave };
-                let prevKeyword = await getStrage_promise("keywordList");
-
-
-
-            }
-
-
-        } else {
-            window.alert("Canceled");
-            return;
         }
 
+            // let dataArrForSave = props.tabsInfo.map((tabsInfoObj) => {    // [{formattedForSaveData}, {}, {}]
+            //     if (idsSetForSave.has(tabsInfoObj.id)) {
+            //         let element = formatDataForSave(            // formatted each data to save
+            //             formatDateObjForDataKey(new Date()),
+            //             shortenUrl(tabsInfoObj.url),
+            //             tabsInfoObj.title,
+            //             stateKeywordInputtedVal,
+            //             [stateGroupInputtedVal],
+            //             stateNoteInputtedVal,
+            //             {}
+            //         )
+            //         return element;
+            //     }
+            // })
+
+            // let tmpSet = new Set(dataArrForSave);
+            // if (tmpSet.has(undefined)) {
+            //     tmpSet.delete(undefined)
+            // }
+            // dataArrForSave = [...tmpSet]
+            // console.log("dataArrForSave", dataArrForSave)
+            let isConfirmed = window.confirm(`Save ${Object.keys(dataObjForSave).length} items ?`)
+            console.log("comfirmed", isConfirmed)
+            if (isConfirmed) {
+                console.log("conf")
+                let msg = `${Object.keys(dataObjForSave).length} items\n`;
+                if (!(props.storagedData.keywordList.includes(stateKeywordInputtedVal)) && (!(stateKeywordInputtedVal == ""))) {
+                    msg += `new keyword \"${stateKeywordInputtedVal}\"\n`
+                }
+                if (!(Object.keys(props.storagedData.groupObj).includes(stateGroupInputtedVal)) && (!(stateGroupInputtedVal == ""))) {
+                    msg += `new group \"${stateGroupInputtedVal}\"\n`
+                }
+                msg += "  have been registered"
+                window.alert(msg);
+
+
+                /**
+                 * save main data
+                 */
+
+                const saveMainData = async () => {
+
+                    let prevMainDataObj = props.storagedData.mainDataObj;
+                    // let dataObjForSave = { ...dataArrForSave };
+                    let newMainDataObj = Object.assign(dataObjForSave, prevMainDataObj);
+                    let prevKeywordSet = new Set(props.storagedData.keywordList);
+                    let newKeywordSet = prevKeywordSet.add(stateKeywordInputtedVal);
+                    let newKeywordArr = [...newKeywordSet]
+                    let prevGroupObj = props.storagedData.groupObj;
+                    let newGroupObj = Object.assign(prevGroupObj, { [stateGroupInputtedVal]: {} })
+
+                    await setStorage_promise({ "keywordList": newKeywordArr });
+                    await setStorage_promise({ "groupObj": newGroupObj });
+                    await setStorage_promise({ "mainDataObj": newMainDataObj });
+
+                    props.setDataObjFunc({
+                        keywordList: newKeywordArr,
+                        groupObj: newGroupObj,
+                        mainDataObj: newMainDataObj
+                    })
+
+
+                }
+                saveMainData();
+
+            } else {
+                window.alert("Canceled");
+                return;
+            }
+
+        }
+
+
+
+        return (
+            <div className={objToClassname(props.cssStyle)}>
+                <ButtonToolbar className='h-25 p-1'>
+                    <ButtonGroup className='me-1'>
+                        <Button variant="dark" onClick={handleClickAllUnsaved}>Select all unsaved</Button>
+                        <Button variant="light" onClick={handleClickSelectAll}>Sellect all</Button>
+                        <Button variant="light" onClick={handleClickDeselectAll}>Deselect all</Button>
+                    </ButtonGroup>
+
+                    <ButtonGroup className='w-20 ms-5'>
+                        <Button variant='primary' onClick={handleClickSave}>SAVE</Button>
+                    </ButtonGroup>
+
+                </ButtonToolbar>
+
+
+
+                <Container className='h-75 pt-3'>
+                    <Row className='h-100'>
+                        <Col xs={4} className='h-100'>
+                            <div className='w-100 h-30'>
+                                <input id='inputKeyword' placeholder="Keyword" value={stateKeywordInputtedVal} onChange={handleChangeKeyword}></input>
+
+                            </div>
+                            <div className='w-100 h-65 overflow-auto'>
+                                <ul className='w-100 h-100 list-group list-group-flush'>
+                                    {savedKeywordsItemsElements}
+                                </ul>
+                            </div>
+                        </Col>
+                        <Col xs={4} className='h-100'>
+                            <div className='w-100 h-30'>
+                                <input id='inputGroup' placeholder="Group" value={stateGroupInputtedVal} onChange={handleChangeGroup}></input>
+
+                            </div>
+                            <div className='w-100 h-65 overflow-auto'>
+                                <ul className='w-100 h-100 list-group list-group-flush'>
+                                    {savedGroupsItemsElements}
+                                </ul>
+                            </div>
+                        </Col>
+                        <Col xs={4} className='h-100'>
+                            <div className='w-100 h-100'>
+                                <textarea placeholder='note' className='h-90 w-80' value={stateNoteInputtedVal} onChange={handleChangeNote}></textarea>
+                            </div>
+
+                        </Col>
+                    </Row>
+                </Container>
+
+            </div>
+
+        )
     }
-
-
-
-    return (
-        <div className={objToClassname(props.cssStyle)}>
-            <ButtonToolbar className='h-25 p-1'>
-                <ButtonGroup className='me-1'>
-                    <Button variant="dark" onClick={handleClickAllUnsaved}>Select all unsaved</Button>
-                    <Button variant="light" onClick={handleClickSelectAll}>Sellect all</Button>
-                    <Button variant="light" onClick={handleClickDeselectAll}>Deselect all</Button>
-                </ButtonGroup>
-
-                <ButtonGroup className='w-20 ms-5'>
-                    <Button variant='primary' onClick={handleClickSave}>SAVE</Button>
-                </ButtonGroup>
-
-            </ButtonToolbar>
-
-
-
-            <Container className='h-75 pt-3'>
-                <Row className='h-100'>
-                    <Col xs={4} className='h-100'>
-                        <div className='w-100 h-30'>
-                            <input id='inputKeyword' placeholder="Keyword" value={stateKeywordInputtedVal} onChange={handleChangeKeyword}></input>
-
-                        </div>
-                        <div className='w-100 h-65 overflow-auto'>
-                            <ul className='w-100 h-100 list-group list-group-flush'>
-                                {savedKeywordsItems}
-                            </ul>
-                        </div>
-                    </Col>
-                    <Col xs={4} className='h-100'>
-                        <div className='w-100 h-30'>
-                            <input id='inputGroup' placeholder="Group" value={stateGroupInputtedVal} onChange={handleChangeGroup}></input>
-
-                        </div>
-                        <div className='w-100 h-65 overflow-auto'>
-                            <ul className='w-100 h-100 list-group list-group-flush'>
-                                {savedGroupsItems}
-                            </ul>
-                        </div>
-                    </Col>
-                    <Col xs={4} className='h-100'>
-                        <div className='w-100 h-100'>
-                            <textarea placeholder='note' className='h-90 w-80' value={stateNoteInputtedVal} onChange={handleChangeNote}></textarea>
-                        </div>
-
-                    </Col>
-                </Row>
-            </Container>
-
-        </div>
-
-    )
-}
 

@@ -1,9 +1,12 @@
 type anyObj = {
     [key: string]:anyObj
 }
+type initObj = {
+
+}
 export type StoragedData = {
-    keywordList: Set<string>,
-    groupList: anyObj
-    mainDataObj: {}
+    keywordList: string[];
+    groupObj: anyObj|initObj;
+    mainDataObj: {};
 }
 

@@ -13,7 +13,7 @@ import { useState, useEffect } from 'react';
 
 type Props = {
     storagedData: StoragedData;
-    setDataObjFunc: React.Dispatch<any>;
+    setDataObjFunc: React.Dispatch<React.SetStateAction<StoragedData>>;
 }
 
 export default function MainMenu(props: Props) {

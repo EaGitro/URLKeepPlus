@@ -19,8 +19,8 @@ import { StoragedData } from '~/src/tsTypes/propsTypes';
 
 import objToClassname from '~/src/utilities/objToClassname';
 
-import getStrage_promise from '~/src/utilities/getStorage_promise';
-import setStrage_promise from '~/src/utilities/setStorage_promise';
+import getStorage_promise from '~/src/utilities/getStorage_promise';
+import setStorage_promise from '~/src/utilities/setStorage_promise';
 
 import { useState, useEffect } from 'react';
 
@@ -90,16 +90,16 @@ export default function MainBody(props: Props) {
 
     // let tmp: any[] = []
     let [dataObjState, setDataObj] = useState<StoragedData>({
-        keywordList: new Set(),
-        groupList: {},
+        keywordList: [],
+        groupObj: {},
         mainDataObj: {}
     });
 
     // async function assignDataToSet() {
     //     // (async () => {
-    //     dataObjState.keywordList = await getStrage_promise("keywordList");
-    //     dataObjState.groupList = await getStrage_promise("groupList");
-    //     dataObjState.mainDataObj = await getStrage_promise("mainDataObj")
+    //     dataObjState.keywordList = await getStorage_promise("keywordList");
+    //     dataObjState.groupList = await getStorage_promise("groupList");
+    //     dataObjState.mainDataObj = await getStorage_promise("mainDataObj")
     //     // })()
     //     return
     // }
@@ -111,35 +111,38 @@ export default function MainBody(props: Props) {
             console.log("getMainData")
             let getDefault: {
                 [K: string]: any;
-            } = await getStrage_promise(null);
+            } = await getStorage_promise(null);
 
             // set default data
             if (!(Object.keys(getDefault).includes("keywordList"))) {
-                await setStrage_promise({ "keywordList": [] })
+                console.log("init keywordList ")
+                await setStorage_promise({ "keywordList": [] })
             }
 
-            if (!(Object.keys(getDefault).includes("groupList"))) {
-                await setStrage_promise({ "groupList": {} })
+            if (!(Object.keys(getDefault).includes("groupObj"))) {
+                console.log("init groupObj")
+                await setStorage_promise({ "groupObj": {} })
             }
 
             if (!(Object.keys(getDefault).includes("mainDataObj"))) {
-                await setStrage_promise({ "mainDataObj": [] })
+                console.log("init mainDataObj");
+                await setStorage_promise({ "mainDataObj": {} })
             }
 
-            console.log("promise", await getStrage_promise(null));
+            console.log("promise", await getStorage_promise(null));
 
             // set state
             setDataObj({
-                keywordList: await getStrage_promise("keywordList"),
-                groupList: await getStrage_promise("groupList"),
-                mainDataObj: await getStrage_promise("mainDataObj")
+                keywordList: await getStorage_promise("keywordList"),
+                groupObj: await getStorage_promise("groupObj"),
+                mainDataObj: await getStorage_promise("mainDataObj")
             })
 
         }
         getMainData();
     }, [])
 
-    console.log("promise", getStrage_promise(null));
+    console.log("promise", getStorage_promise(null));
 
     console.log("dataObjDtate",dataObjState);
 

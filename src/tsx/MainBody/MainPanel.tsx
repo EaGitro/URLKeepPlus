@@ -14,8 +14,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { StoragedData } from '~/src/tsTypes/propsTypes';
-import getStrage_promise from '~/src/utilities/getStorage_promise';
-import setStrage_promise from '~/src/utilities/setStorage_promise';
+import getStorage_promise from '~/src/utilities/getStorage_promise';
+import setStorage_promise from '~/src/utilities/setStorage_promise';
 
 // import {tmp} from '~/src/tsTypes/tmp';
 
@@ -51,24 +51,24 @@ export default function MainPanel(props: Props) {
     //     const getMainData = async () => {
     //         let getDefault: {
     //             [K: string]: any;
-    //         } = await getStrage_promise(null);
+    //         } = await getStorage_promise(null);
 
     //         if (!(Object.keys(getDefault).includes("keywordList"))) {
-    //             await setStrage_promise({ "keywordList": [] })
+    //             await setStorage_promise({ "keywordList": [] })
     //         }
     //         if (!(Object.keys(getDefault).includes("groupList"))) {
-    //             await setStrage_promise({ "groupList": [] })
+    //             await setStorage_promise({ "groupList": [] })
     //         }
     //         if (!(Object.keys(getDefault).includes("mainDataObj"))) {
-    //             await setStrage_promise({ "mainDataObj": [] })
+    //             await setStorage_promise({ "mainDataObj": [] })
     //         }
 
-    //         console.log("promise", await getStrage_promise(null));
+    //         console.log("promise", await getStorage_promise(null));
 
     //         setState(async ()=>{
-    //             mainDataObjState.keywordList = await getStrage_promise("keywordList");
-    //             mainDataObjState.groupList = await getStrage_promise("groupList");
-    //             mainDataObjState.mainDataObj = await getStrage_promise("mainDataObj")
+    //             mainDataObjState.keywordList = await getStorage_promise("keywordList");
+    //             mainDataObjState.groupList = await getStorage_promise("groupList");
+    //             mainDataObjState.mainDataObj = await getStorage_promise("mainDataObj")
     //         })
 
     //     }
@@ -76,12 +76,14 @@ export default function MainPanel(props: Props) {
     // }, [])
 
     /**
-     * generate straged urls arr
+     * generate storaged urls arr
      */
 
 
-    let stragedUrls = Object.keys(props.storagedData.mainDataObj).map((dateAndUrl) => {
-        return dateAndUrl.split(" ")[1]
+    let storagedUrls = Object.keys(props.storagedData.mainDataObj).map((dateAndUrl) => {
+        let shortenUrl =  dateAndUrl.split(" ")[2]
+        let revertedurl = encodeURI(shortenUrl);
+        return revertedurl
     })
     // let tmpArrType: any[] = [];
     // let [selectedCheckBoxState, setSelectedCheckBox] = useState(tmpArrType);
@@ -157,7 +159,7 @@ export default function MainPanel(props: Props) {
                     </Col>
                     <Col xs={1}>
                         {(() => {
-                            if (tabsInfoObj.url in stragedUrls) {
+                            if (tabsInfoObj.url in storagedUrls) {
                                 return "saved"
                             }
                         })()}

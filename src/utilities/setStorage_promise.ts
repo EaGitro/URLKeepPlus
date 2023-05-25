@@ -1,4 +1,11 @@
-export default async function setStrage_promise(obj) {
+type Param = {
+    "keywordList": string[]
+} | {
+    "groupObj": {}
+} | {
+    "mainDataObj": {}
+}
+export default async function setStorage_promise(obj: Param) {
     return await chrome.storage.local.set(obj)
 }
 
