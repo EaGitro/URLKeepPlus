@@ -3,10 +3,6 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 
 import objToClassname from '~/src/utilities/objToClassname';
-import formatDataForSave from '~/src/utilities/formatDataForSave';
-import formatDateObjForDataKey from '~/src/utilities/formatDateObjForDataKey';
-import shortenUrl from '~/src/utilities/shortenUrl';
-import getStorage_promise from '~/src/utilities/getStorage_promise';
 import setStorage_promise from '~/src/utilities/setStorage_promise';
 
 import Container from 'react-bootstrap/Container';
@@ -17,9 +13,8 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 
 import { StoragedData } from '~/src/tsTypes/propsTypes';
-import { TabInfoObj } from '~/src/tsTypes/tabInfoTypes';
 import { CssStyle } from '~/src/tsTypes/styleTypes'
-import { SavedDataFormatProperties, SavedDataFormatKey, VersionDigit } from "~/src/tsTypes/SavedDataFormat";
+import { SavedDataFormatProperties } from "~/src/tsTypes/SavedDataFormat";
 import { PanelType, DateKeyGroup } from '~/src/tsTypes/panelTypes';
 
 
@@ -52,7 +47,7 @@ export default function SubPanel(props: Props) {
 
     // window.windowSubpanelProps = props;
     // console.log("windowSubpanelProps",windowSubpanelProps)
-    console.log("subpanel prosps", props)
+    // console.log("subpanel prosps", props)
     // let selectedKeyword: string = "";
     // let selectedGroup: string = "";
 
@@ -64,18 +59,18 @@ export default function SubPanel(props: Props) {
     let savedGroupsItems = props.storagedData.groupObj;
     let savedKeywordsItems = props.storagedData.keywordList;
 
-    if (savedKeywordsItems.length == 0) {
-        console.log("null keywords")
-    }
-    if (Object.keys(savedGroupsItems).length == 0) {
-        console.log("null groups")
-        // savedGroupsItems = [null];
-    }
+    // if (savedKeywordsItems.length == 0) {
+    //     // console.log("null keywords")
+    // }
+    // if (Object.keys(savedGroupsItems).length == 0) {
+    //     // console.log("null groups")
+    //     // savedGroupsItems = [null];
+    // }
 
 
     let savedKeywordsItemsElements = savedKeywordsItems.map((x) => {
         function itemOnclick() {
-            console.log("savedKeywords clicked")
+            // console.log("savedKeywords clicked")
             setStateKeyword(x);
         }
 
@@ -84,11 +79,11 @@ export default function SubPanel(props: Props) {
         )
     })
 
-    console.log("savedKeywordsItems mapped", savedKeywordsItems)
+    // console.log("savedKeywordsItems mapped", savedKeywordsItems)
 
     let savedGroupsItemsElements = Object.keys(savedGroupsItems).map((x) => {
         function itemOnclick() {
-            console.log("savedGroups clicked");
+            // console.log("savedGroups clicked");
             setStateGroup(x);
 
         }
@@ -97,7 +92,7 @@ export default function SubPanel(props: Props) {
             <li className='list-group-item list-group-item-action panel-list-item' key={x} onClick={itemOnclick}>{x}</li>
         )
     })
-    console.log("savedGroupsItems mapped", savedGroupsItems)
+    // console.log("savedGroupsItems mapped", savedGroupsItems)
 
 
 
@@ -193,33 +188,13 @@ export default function SubPanel(props: Props) {
 
 
         let isConfirmed = window.confirm(`Delete ${dateAndUrlsToDelete.size} items ?`)
-        console.log("comfirmed", isConfirmed)
+        // console.log("comfirmed", isConfirmed)
         if (isConfirmed) {
-            // console.log("conf")
-            // let msg = `${Object.keys(dataObjForSave).length} items\n`;
-            // if (!(props.storagedData.keywordList.includes(stateKeywordInputtedVal)) && (!(stateKeywordInputtedVal == ""))) {
-            //     msg += `new keyword \"${stateKeywordInputtedVal}\"\n`
-            // }
-            // if (!(Object.keys(props.storagedData.groupObj).includes(stateGroupInputtedVal)) && (!(stateGroupInputtedVal == ""))) {
-            //     msg += `new group \"${stateGroupInputtedVal}\"\n`
-            // }
-            // msg += "  have been registered"
-            // window.alert(msg);
-
 
             /**
              * save main data
              */
 
-
-
-            // let prevMainDataObj = props.storagedData.mainDataObj;
-            // let newMainDataObj = Object.assign(dataObjForSave, prevMainDataObj);
-            // let prevKeywordSet = new Set(props.storagedData.keywordList);
-            // let newKeywordSet = prevKeywordSet.add(stateKeywordInputtedVal);
-            // let newKeywordArr = [...newKeywordSet]
-            // let prevGroupObj = props.storagedData.groupObj;
-            // let newGroupObj = Object.assign(prevGroupObj, { [stateGroupInputtedVal]: {} })
             props.setDataObjFunc({
                 keywordList: props.storagedData.keywordList,
                 groupObj: props.storagedData.groupObj,
@@ -272,7 +247,7 @@ export default function SubPanel(props: Props) {
 
 
                 dataObjForSave[objKey]["keyword"] = stateKeywordInputtedVal;
-                dataObjForSave[objKey]["group"] = stateGroupInputtedVal;
+                dataObjForSave[objKey]["group"] = [stateGroupInputtedVal];
                 dataObjForSave[objKey]["note"] = stateNoteInputtedVal;
 
             }
@@ -280,7 +255,7 @@ export default function SubPanel(props: Props) {
 
 
         let isConfirmed = window.confirm(`Rerite setting of ${Object.keys(dataObjForSave).length} items ?`)
-        console.log("comfirmed", isConfirmed)
+        // console.log("comfirmed", isConfirmed)
         if (isConfirmed) {
             console.log("conf")
             let msg = `${Object.keys(dataObjForSave).length} items\n`;
@@ -310,6 +285,8 @@ export default function SubPanel(props: Props) {
                 groupObj: newGroupObj,
                 mainDataObj: dataObjForSave
             })
+
+            props.selectedCheckBox.setState(new Set());
             setIsRerwite(false);
         } else {
             window.alert("Canceled");

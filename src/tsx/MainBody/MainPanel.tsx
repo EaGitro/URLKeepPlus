@@ -5,19 +5,14 @@ import { CssStyle } from '../../tsTypes/styleTypes'
 
 import objToClassname from '../../utilities/objToClassname';
 
-import objToString from '~/src/utilities/objTostring';
-// import { ListItem } from 'react-bootstrap/lib/Media';
 
-import { useState, useEffect } from 'react';
+
 import { TabInfoObj } from '~/src/tsTypes/tabInfoTypes';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { StoragedData } from '~/src/tsTypes/propsTypes';
-import getStorage_promise from '~/src/utilities/getStorage_promise';
-import setStorage_promise from '~/src/utilities/setStorage_promise';
 
-// import {tmp} from '~/src/tsTypes/tmp';
 
 
 type Props = {
@@ -35,92 +30,26 @@ type Props = {
 
 export default function MainPanel(props: Props) {
 
-    console.log("MainPanel props", props);
-    console.log("Mainpanel storagedData", props.storagedData);
-    window.windowMainpanelProps = props;
+    // console.log("MainPanel props", props);
+    // console.log("Mainpanel storagedData", props.storagedData);
+    // window.windowMainpanelProps = props;
 
-    // let [mainDataObjState, setState] = useState({
-    //     keywordList: Array<any>,
-    //     groupList: Array<any>,
-    //     mainDataObj: {}
-    // });
-
-
-    // useEffect(() => {
-    //     const getMainData = async () => {
-    //         let getDefault: {
-    //             [K: string]: any;
-    //         } = await getStorage_promise(null);
-
-    //         if (!(Object.keys(getDefault).includes("keywordList"))) {
-    //             await setStorage_promise({ "keywordList": [] })
-    //         }
-    //         if (!(Object.keys(getDefault).includes("groupList"))) {
-    //             await setStorage_promise({ "groupList": [] })
-    //         }
-    //         if (!(Object.keys(getDefault).includes("mainDataObj"))) {
-    //             await setStorage_promise({ "mainDataObj": [] })
-    //         }
-
-    //         console.log("promise", await getStorage_promise(null));
-
-    //         setState(async ()=>{
-    //             mainDataObjState.keywordList = await getStorage_promise("keywordList");
-    //             mainDataObjState.groupList = await getStorage_promise("groupList");
-    //             mainDataObjState.mainDataObj = await getStorage_promise("mainDataObj")
-    //         })
-
-    //     }
-    //     getMainData();
-    // }, [])
-
+ 
     /**
      * generate storaged urls arr
      */
 
 
     let storagedUrls = Object.keys(props.storagedData.mainDataObj).map((dateAndUrl) => {
-        console.log("dateAndUrl",dateAndUrl);
+        // console.log("dateAndUrl",dateAndUrl);
         let shortenUrl =  dateAndUrl.split(" ")[2]
         
         let revertedurl = encodeURI(shortenUrl);
         return revertedurl
     })
 
-    console.log("storagedUrls",storagedUrls);
-    // let tmpArrType: any[] = [];
-    // let [selectedCheckBoxState, setSelectedCheckBox] = useState(tmpArrType);
-
-    // function handleChangeCheckBox(e) {
-    //     // console.log(e);
-    //     // console.log(e.target);
-    //     // console.log(e.target.id)
-    //     // console.log("selectedCheckBoxState", selectedCheckBoxState)
-    //     // console.log(e.target.checked)
-    //     let tmpSCBArr = props.selectedCheckBox.state;
-    //     if (e.target.checked) {
-    //         // console.log(1)
-
-    //         let indexofSelectedCheckBox = tmpSCBArr.indexOf(e.target.id)
-    //         if (indexofSelectedCheckBox != -1) {
-    //             tmpSCBArr.splice(indexofSelectedCheckBox);
-    //             props.selectedCheckBox.setState(tmpSCBArr)
-    //             // setSelectedCheckBox(tmpSCBArr);
-    //         }
-    //     } else {
-    //         // console.log(2)
-
-    //         tmpSCBArr.push(e.target.id);
-    //         props.selectedCheckBox.setState(tmpSCBArr)
-
-    //         // setSelectedCheckBox(tmpSCBArr);
-    //         // console.log("selectedCheckBoxState", selectedCheckBoxState)
-    //     }
-
-    //     e.target.checked = ! e.target.checked
-    // }
-
-    // // console.log("selectedCheckBoxState", selectedCheckBoxState);
+    // console.log("storagedUrls",storagedUrls);
+ 
 
     /**
      * handle func for each checkbox
@@ -132,19 +61,19 @@ export default function MainPanel(props: Props) {
         
         let selectedSet = new Set(props.selectedCheckBox.state)
         if(selectedSet.has(Number(e.target.value))){
-            console.log("selectedSet has")
+            // console.log("selectedSet has")
             selectedSet.delete(Number(e.target.value));
             props.selectedCheckBox.setState(selectedSet);
         }else{
-            console.log("selectedSet else")
+            // console.log("selectedSet else")
             selectedSet.add(Number(e.target.value));
             props.selectedCheckBox.setState(selectedSet);
         }
-        console.log("selectedSet", selectedSet);
+        // console.log("selectedSet", selectedSet);
     }
 
 
-    console.log(props.tabsInfo)
+    // console.log(props.tabsInfo)
 
     let listItems = props.tabsInfo.map((tabsInfoObj) => {
 
@@ -192,7 +121,7 @@ export default function MainPanel(props: Props) {
 
 
 
-    console.log("MainPanel", props.tabsInfo)
+    // console.log("MainPanel", props.tabsInfo)
     return (
         <div className={objToClassname(props.cssStyle)}>
             {/* MainPanel */}

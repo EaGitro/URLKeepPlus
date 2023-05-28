@@ -1,17 +1,14 @@
 import React from 'react';
 
-import { useRef } from 'react';
 
 import { CssStyle } from '../../tsTypes/styleTypes'
 
 import objToClassname from '~/src/utilities/objToClassname';
 import parseDateTime from '~/src/utilities/parseDateTime';
 
-import objToString from '~/src/utilities/objTostring';
-// import { ListItem } from 'react-bootstrap/lib/Media';
 
-import { useState, useEffect } from 'react';
-import { TabInfoObj } from '~/src/tsTypes/tabInfoTypes';
+
+import { useEffect } from 'react';
 import { PanelType, DateKeyGroup } from '~/src/tsTypes/panelTypes';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -21,16 +18,12 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
 import { StoragedData } from '~/src/tsTypes/propsTypes';
-import getStorage_promise from '~/src/utilities/getStorage_promise';
-import setStorage_promise from '~/src/utilities/setStorage_promise';
-import { Title } from 'react-bootstrap/lib/Modal';
 
-// import {tmp} from '~/src/tsTypes/tmp';
+
 
 
 type Props = {
     cssStyle: CssStyle;
-    // tabsInfo: TabInfoObj[];
     storagedData: StoragedData;
     setDataObjFunc: React.Dispatch<any>;
     selectedCategory: PanelType;
@@ -46,9 +39,9 @@ type Props = {
 
 export default function MainPanel(props: Props) {
 
-    console.log("MainPanel props", props);
-    console.log("Mainpanel storagedData", props.storagedData);
-    window.windowMainpanelAltProps = props;
+    // console.log("MainPanel props", props);
+    // console.log("Mainpanel storagedData", props.storagedData);
+    // window.windowMainpanelAltProps = props;
 
     /**
      * generate object storaged with the category
@@ -95,15 +88,15 @@ export default function MainPanel(props: Props) {
 
         let selectedSet = new Set(props.selectedCheckBox.state)
         if (selectedSet.has(e.target.value)) {
-            console.log("selectedSet has")
+            // console.log("selectedSet has")
             selectedSet.delete(Number(e.target.value));
             props.selectedCheckBox.setState(selectedSet);
         } else {
-            console.log("selectedSet else")
+            // console.log("selectedSet else")
             selectedSet.add(e.target.value);
             props.selectedCheckBox.setState(selectedSet);
         }
-        console.log("selectedSet", selectedSet);
+        // console.log("selectedSet", selectedSet);
     }
 
 
@@ -111,7 +104,7 @@ export default function MainPanel(props: Props) {
 
     let listItems = Object.keys(dataObjWithTheKey).map((objKey) => {
 
-        console.log(objKey, dataObjWithTheKey, dataObjWithTheKey[objKey]["title"])
+        // console.log(objKey, dataObjWithTheKey, dataObjWithTheKey[objKey]["title"])
 
         let url = objKey.split(" ")[2]
 
@@ -120,7 +113,7 @@ export default function MainPanel(props: Props) {
                 <OverlayTrigger
                     placement='top'
                     overlay={<Tooltip id={`tooltip${objKey}`}>
-                        {`Date: ${parseDateTime(objKey.split(" ")[0])},\nKeyword: "${dataObjWithTheKey[objKey].keyword}",\nGroup: "${dataObjWithTheKey[objKey].group.join("/")}",\nNote: "${dataObjWithTheKey[objKey].note}"`}
+                        {`Date: ${parseDateTime(objKey.split(" ")[0])},`}<br/>{`Keyword: "${dataObjWithTheKey[objKey].keyword}",`}<br/>{`Group: "${dataObjWithTheKey[objKey].group.join("/")}",`}<br/>{`\nNote: "${dataObjWithTheKey[objKey].note}"`}
                     </Tooltip>}>
                     <span>
                         <Row className='flex-nowrap w-100 m-0 p-0 h-100' >
@@ -164,55 +157,6 @@ export default function MainPanel(props: Props) {
 
 
 
-
-
-    // .map((tabsInfoObj) => {
-
-
-    //     return (
-    //         <Container className='list-group-item list-group-item-action w-100 h-100' key={tabsInfoObj.id}>
-    //             <Row className='flex-nowrap w-100 m-0 p-0 h-100' >
-    //                 <Col xs={1}>
-    //                     <input className="form-check-input" type="checkbox"
-    //                         value={tabsInfoObj.id}
-    //                         onChange={handleChangeCheckBox}
-    //                         id={String(tabsInfoObj.id)}
-    //                         checked={props.selectedCheckBox.state.has(tabsInfoObj.id)}
-    //                     />
-    //                 </Col>
-    //                 <Col xs={1}>
-    //                     {(() => {
-    //                         if (storagedUrls.includes(tabsInfoObj.url)) {
-    //                             return "saved"
-    //                         }
-    //                     })()}
-    //                 </Col>
-    //                 <Col xs={10}
-    //                     onClick={
-    //                         () => {
-    //                             chrome.tabs.update(tabsInfoObj.id, { active: true })
-    //                         }
-    //                     }
-    //                     className={"h-100"}
-    //                 >
-    //                     <div className='breakword w-100 '>
-    //                         <img src={tabsInfoObj.favIconUrl} className={"favicon"} />{" "}
-    //                         {tabsInfoObj.title}
-    //                     </div>
-    //                     <div className='breakword w-100 text-truncate text-secondary'>
-    //                         {tabsInfoObj.url}
-    //                     </div>
-    //                 </Col>
-
-    //             </Row>
-    //         </Container>
-    //     )
-    // })
-
-
-
-
-    // console.log("MainPanel", props.tabsInfo)
     return (
         <>
             <Card>

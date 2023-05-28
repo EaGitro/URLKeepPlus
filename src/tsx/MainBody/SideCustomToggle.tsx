@@ -3,8 +3,8 @@ import { useAccordionButton } from 'react-bootstrap/AccordionButton';
 
 export default function SideCustomToggle({ children, eventKey, setToggle, isToggle }) {
     const decoratedOnClick = useAccordionButton(eventKey, () =>{
-        console.log("isToggle",isToggle)
-        console.log('totally custom!');
+        // console.log("isToggle",isToggle)
+        // console.log('totally custom!');
         setToggle((prev) => {
             return !prev
         })
@@ -16,7 +16,7 @@ export default function SideCustomToggle({ children, eventKey, setToggle, isTogg
 
     return (
         <div
-            // style={{ backgroundColor: 'pink' }}
+
             className={`${isToggle?"pt-2":"pb-2"} h-100`}
             onClick={decoratedOnClick}
         >

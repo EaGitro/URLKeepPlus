@@ -6,7 +6,6 @@ import objToClassname from '~/src/utilities/objToClassname';
 import formatDataForSave from '~/src/utilities/formatDataForSave';
 import formatDateObjForDataKey from '~/src/utilities/formatDateObjForDataKey';
 import shortenUrl from '~/src/utilities/shortenUrl';
-import getStorage_promise from '~/src/utilities/getStorage_promise';
 import setStorage_promise from '~/src/utilities/setStorage_promise';
 
 import Container from 'react-bootstrap/Container';
@@ -19,7 +18,7 @@ import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import { StoragedData } from '~/src/tsTypes/propsTypes';
 import { TabInfoObj } from '~/src/tsTypes/tabInfoTypes';
 import { CssStyle } from '~/src/tsTypes/styleTypes'
-import { SavedDataFormatProperties, SavedDataFormatKey, VersionDigit } from "~/src/tsTypes/SavedDataFormat";
+import { SavedDataFormatProperties } from "~/src/tsTypes/SavedDataFormat";
 
 
 
@@ -49,7 +48,7 @@ export default function SubPanel(props: Props) {
 
     // window.windowSubpanelProps = props;
     // console.log("windowSubpanelProps",windowSubpanelProps)
-    console.log("subpanel prosps", props)
+    // console.log("subpanel prosps", props)
     // let selectedKeyword: string = "";
     // let selectedGroup: string = "";
 
@@ -61,18 +60,18 @@ export default function SubPanel(props: Props) {
     let savedGroupsItems = props.storagedData.groupObj;
     let savedKeywordsItems = props.storagedData.keywordList;
 
-    if (savedKeywordsItems.length == 0) {
-        console.log("null keywords")
-    }
-    if (Object.keys(savedGroupsItems).length == 0) {
-        console.log("null groups")
-        // savedGroupsItems = [null];
-    }
+    // if (savedKeywordsItems.length == 0) {
+    //     console.log("null keywords")
+    // }
+    // if (Object.keys(savedGroupsItems).length == 0) {
+    //     console.log("null groups")
+    //     // savedGroupsItems = [null];
+    // }
 
 
     let savedKeywordsItemsElements = savedKeywordsItems.map((x) => {
         function itemOnclick() {
-            console.log("savedKeywords clicked")
+            // console.log("savedKeywords clicked")
             setStateKeyword(x);
         }
 
@@ -81,11 +80,11 @@ export default function SubPanel(props: Props) {
         )
     })
 
-    console.log("savedKeywordsItems mapped", savedKeywordsItems)
+    // console.log("savedKeywordsItems mapped", savedKeywordsItems)
 
     let savedGroupsItemsElements = Object.keys(savedGroupsItems).map((x) => {
         function itemOnclick() {
-            console.log("savedGroups clicked");
+            // console.log("savedGroups clicked");
             setStateGroup(x);
 
         }
@@ -94,7 +93,7 @@ export default function SubPanel(props: Props) {
             <li className='list-group-item list-group-item-action panel-list-item' key={x} onClick={itemOnclick}>{x}</li>
         )
     })
-    console.log("savedGroupsItems mapped", savedGroupsItems)
+    // console.log("savedGroupsItems mapped", savedGroupsItems)
 
 
 
@@ -145,7 +144,7 @@ export default function SubPanel(props: Props) {
             }
 
         })
-        console.log("unsavedIds", unsavedIds)
+        // console.log("unsavedIds", unsavedIds)
         let unsavedIdaSet = new Set(unsavedIds);
         if (unsavedIdaSet.has(undefined)) {
             unsavedIdaSet.delete(undefined)
@@ -198,9 +197,9 @@ export default function SubPanel(props: Props) {
 
 
         let isConfirmed = window.confirm(`Save ${Object.keys(dataObjForSave).length} items ?`)
-        console.log("comfirmed", isConfirmed)
+        // console.log("comfirmed", isConfirmed)
         if (isConfirmed) {
-            console.log("conf")
+            // console.log("conf")
             let msg = `${Object.keys(dataObjForSave).length} items\n`;
             if (!(props.storagedData.keywordList.includes(stateKeywordInputtedVal)) && (!(stateKeywordInputtedVal == ""))) {
                 msg += `new keyword \"${stateKeywordInputtedVal}\"\n`
@@ -252,7 +251,7 @@ export default function SubPanel(props: Props) {
             if (Object.keys(props.storagedData.mainDataObj).length == 0) {
                 return;
             }
-            console.log("save main data")
+            // console.log("save main data")
             await setStorage_promise({ "keywordList": props.storagedData.keywordList });
             await setStorage_promise({ "groupObj": props.storagedData.groupObj });
             await setStorage_promise({ "mainDataObj": props.storagedData.mainDataObj });

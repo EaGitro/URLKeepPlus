@@ -10,13 +10,10 @@ import SideMenu from '~/src/tsx/MainBody/SideMenu';
 
 import MainMenu from '~/src/tsx/MainBody/MainMenu'
 
-// import {CssHeight} from '../tsTypes/styleTypes'
-
 import { CssStyle } from '~/src/tsTypes/styleTypes'
 import { StoragedData } from '~/src/tsTypes/propsTypes';
 import { PanelType, DateKeyGroup } from '~/src/tsTypes/panelTypes';
-// import { TabInfoObj } from '~/src/tsTypes/tabInfoTypes';
-// import getCurrentTabs from '~/src/utilities/getCurrentTabs';
+
 
 import objToClassname from '~/src/utilities/objToClassname';
 
@@ -36,51 +33,7 @@ export default function MainBody(props: Props) {
      * Get Tabs' info & reload
      */
 
-    // let tabInfos: any[] = [];
-    // let [state, setDataObj] = useState([0]);
-
-    // console.log("MainBody");
-
-    // function callBackFuncGetTabs(tabs: any[]) {
-    //     console.log(tabs);
-    //     /* reduce the amount of info */
-
-    //     let lightenedTabs: any[] = tabs.map(val => {
-    //         let tmp: TabInfoObj =
-    //         {
-    //             "url": val["url"],
-    //             "favIconUrl": val["favIconUrl"],
-    //             "groupId": val["groupId"],
-    //             "id": val["id"],
-    //             "index": val["index"],
-    //             "windowId": val["windowId"],
-    //             "title": val["title"],
-    //             "__compatible__": []
-    //         }
-    //         return tmp
-    //     }
-    //     )
-
-
-    //     console.log(lightenedTabs);
-
-    //     tabInfos = lightenedTabs;
-    //     setDataObj(tabInfos);
-    // }
-
-    // function getCurrentTabs() {
-    //     chrome.tabs.query({}, callBackFuncGetTabs);
-    // }
-
-    // useEffect(()=>{
-    //     chrome.tabs.onDetached.addListener(getCurrentTabs);
-    //     chrome.tabs.onMoved.addListener(getCurrentTabs);
-    //     chrome.tabs.onRemoved.addListener(getCurrentTabs);
-    //     chrome.tabs.onCreated.addListener(getCurrentTabs);
-    //     chrome.tabs.onUpdated.addListener(getCurrentTabs);
-    //     getCurrentTabs();
-    // },[])
-
+    
 
     // =================================================
 
@@ -89,27 +42,18 @@ export default function MainBody(props: Props) {
      */
 
 
-    // let tmp: any[] = []
     let [dataObjState, setDataObj] = useState<StoragedData>({
         keywordList: [],
         groupObj: {},
         mainDataObj: {}
     });
 
-    // async function assignDataToSet() {
-    //     // (async () => {
-    //     dataObjState.keywordList = await getStorage_promise("keywordList");
-    //     dataObjState.groupList = await getStorage_promise("groupList");
-    //     dataObjState.mainDataObj = await getStorage_promise("mainDataObj")
-    //     // })()
-    //     return
-    // }
 
 
 
     useEffect(() => {
         const getMainData = async () => {
-            console.log("getMainData")
+            // console.log("getMainData")
             let getDefault
                 // : {
                 //     [K: string]: any;
@@ -132,14 +76,14 @@ export default function MainBody(props: Props) {
                 await setStorage_promise({ "mainDataObj": {} })
             }
 
-            console.log("promise", await getStorage_promise(null));
+            // console.log("promise", await getStorage_promise(null));
 
             let objForSetDataObj = {
                 keywordList: await getStorage_promise("keywordList"),
                 groupObj: await getStorage_promise("groupObj"),
                 mainDataObj: await getStorage_promise("mainDataObj")
             }
-            console.log("objForSetDataObj", objForSetDataObj);
+            // console.log("objForSetDataObj", objForSetDataObj);
 
             // set state
             setDataObj({
@@ -152,9 +96,9 @@ export default function MainBody(props: Props) {
         getMainData();
     }, [])
 
-    console.log("promise", getStorage_promise(null));
+    // console.log("promise", getStorage_promise(null));
 
-    console.log("dataObjDtate", dataObjState);
+    // console.log("dataObjDtate", dataObjState);
 
 
     /**

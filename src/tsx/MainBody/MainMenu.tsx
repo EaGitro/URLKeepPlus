@@ -28,15 +28,15 @@ export default function MainMenu(props: Props) {
      * Get Tabs' info & reload
      */
 
-    console.log("MainMenu props", props, props.storagedData.mainDataObj)
+    // console.log("MainMenu props", props, props.storagedData.mainDataObj)
     let tmpArrType: any[] = []
     let tabInfos: any[] = [];
     let [tabsInfoState, setTabsInfo] = useState(tmpArrType);
 
-    console.log("MainBody");
+    // console.log("MainBody");
 
     function callBackFuncGetTabs(tabs: any[]) {
-        console.log(tabs);
+        // console.log(tabs);
         /* reduce the amount of info */
 
         let lightenedTabs: any[] = tabs.map(val => {
@@ -56,7 +56,7 @@ export default function MainMenu(props: Props) {
         )
 
 
-        console.log(lightenedTabs);
+        // console.log(lightenedTabs);
 
         tabInfos = lightenedTabs;
         setTabsInfo(tabInfos);
@@ -95,28 +95,7 @@ export default function MainMenu(props: Props) {
     //  * generate object storaged with the category
     //  */
 
-    // let dataObjWithTheKey = {}
-
-
-    // for (let i in props.storagedData.mainDataObj) {
-
-    //     if (props.panelState == '_all_') {
-    //         if (i.split(" ")[0] == props.dateKeyGroupState) {
-    //             dataObjWithTheKey[i] = props.storagedData.mainDataObj[i]
-    //         }
-
-    //     } else if (props.panelState == '_keyword_') {
-    //         if (props.storagedData.mainDataObj[i]["keyword"] == props.dateKeyGroupState) {
-    //             dataObjWithTheKey[i] = props.storagedData.mainDataObj[i]
-    //         }
-    //     } else if (props.panelState == '_group_') {
-    //         if (props.storagedData.mainDataObj[i]["group"] == props.dateKeyGroupState) {
-    //             dataObjWithTheKey[i] = props.storagedData.mainDataObj[i]
-    //         }
-    //     }
-    // }
-
-
+    
 
 
 
@@ -131,7 +110,6 @@ export default function MainMenu(props: Props) {
                         tabsInfo={tabsInfoState}
                         storagedData={props.storagedData}
                         setDataObjFunc={props.setDataObjFunc}
-                        // whichButtonState={whichButton}
                         selectedCheckBox={{ state: selectedCheckBoxState, setState: setSelectedCheckBox }}
                     />
                 } else {
@@ -148,28 +126,6 @@ export default function MainMenu(props: Props) {
 
 
 
-
-                // else if (props.panelState == '_all_') {
-                //     return <MainPanelAll
-                //         cssStyle={{ height: 'h-75', overflow: 'overflow-auto' }}
-                //         storagedData={props.storagedData}
-                //         setDataObjFunc={props.setDataObjFunc}
-                //         date={props.dateKeyGroupState}
-                //         selectedCheckBox={{ state: selectedCheckBoxAltState, setState: setSelectedCheckBoxAlt }}
-                //     />
-
-                // } else if (props.panelState == '_keyword_') {
-                //     return <MainPanelKeyword
-                //         cssStyle={{ height: 'h-75', overflow: 'overflow-auto' }}
-                //         storagedData={props.storagedData}
-                //         setDataObjFunc={props.setDataObjFunc}
-                //         keyword={props.dateKeyGroupState}
-                //         selectedCheckBox={{ state: selectedCheckBoxAltState, setState: setSelectedCheckBoxAlt }}
-                //     />
-                // } else {
-                //     return <MainPanelGroup />
-                // }
-
             })()}
 
             {(() => {
@@ -179,7 +135,6 @@ export default function MainMenu(props: Props) {
                         cssStyle={{ height: 'h-25', border: { position: 'border', addition: 'border-info border-2' }, rounded: 'rounded' }}
                         storagedData={props.storagedData}
                         setDataObjFunc={props.setDataObjFunc}
-                        // setWhichButtonFunc={setWhichButton}
                         tabsInfo={tabsInfoState}
                         selectedCheckBox={{ state: selectedCheckBoxState, setState: setSelectedCheckBox }}
                     />
@@ -199,25 +154,7 @@ export default function MainMenu(props: Props) {
 
 
 
-                // else if (props.panelState == '_all_') {
-                //     return <SubPanelAll
-                //         cssStyle={{ height: 'h-25', border: { position: 'border', addition: 'border-info border-2' }, rounded: 'rounded' }}
-                //         storagedData={props.storagedData}
-                //         setDataObjFunc={props.setDataObjFunc}
-                //         date={props.dateKeyGroupState}
-                //         selectedCheckBox={{ state: selectedCheckBoxState, setState: setSelectedCheckBox }}
-                //     />
-                // } else if (props.panelState == '_keyword_') {
-                //     return <SubPanelKeyword
-                //         cssStyle={{ height: 'h-25', border: { position: 'border', addition: 'border-info border-2' }, rounded: 'rounded' }}
-                //         storagedData={props.storagedData}
-                //         setDataObjFunc={props.setDataObjFunc}
-                //         keyword={props.dateKeyGroupState}
-                //         selectedCheckBox={{ state: selectedCheckBoxState, setState: setSelectedCheckBox }}
-                //     />
-                // } else {
-                //     return <SubPanelGroup />
-                // }
+
             })()}
 
 
