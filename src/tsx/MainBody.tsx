@@ -14,6 +14,7 @@ import MainMenu from '~/src/tsx/MainBody/MainMenu'
 
 import { CssStyle } from '~/src/tsTypes/styleTypes'
 import { StoragedData } from '~/src/tsTypes/propsTypes';
+import { PanelType, DateKeyGroup } from '~/src/tsTypes/panelTypes';
 // import { TabInfoObj } from '~/src/tsTypes/tabInfoTypes';
 // import getCurrentTabs from '~/src/utilities/getCurrentTabs';
 
@@ -138,7 +139,7 @@ export default function MainBody(props: Props) {
                 groupObj: await getStorage_promise("groupObj"),
                 mainDataObj: await getStorage_promise("mainDataObj")
             }
-            console.log("objForSetDataObj",objForSetDataObj);
+            console.log("objForSetDataObj", objForSetDataObj);
 
             // set state
             setDataObj({
@@ -155,18 +156,37 @@ export default function MainBody(props: Props) {
 
     console.log("dataObjDtate", dataObjState);
 
+
+    /**
+     * alter panels
+     */
+
+    let [panelState, setPanel] = useState<PanelType>('_current_');
+    let [dateKeyGroupState, setDateKeyGroup] = useState<DateKeyGroup>("")
+
+
+
+
     return (
         <div className={objToClassname(props.cssStyle)}>
             <Container fluid className={objToClassname({ height: 'h-100' })}>
                 <Row className={objToClassname({ height: 'h-100' })}>
-                    <Col xs={"3"} className={objToClassname({ padding: 'p-0', height: 'h-100' })}>
+                    <Col xs={"3"} className={objToClassname({ padding: 'p-0', height: 'h-100', overflow: "overflow-scroll" })}>
                         <SideMenu
                             cssStyle={{ border: { position: 'border', addition: 'border-info border-1' }, rounded: 'rounded', height: 'h-100', width: 'w-100' }}
+                            setPanel={setPanel}
+                            setDateKeyGroup={setDateKeyGroup}
+                            storagedData={dataObjState}
                         />
+
                     </Col>
                     <Col xs={"9"} className={objToClassname({ padding: 'p-0', height: 'h-100', border: { position: 'border', addition: 'border-info border-1' }, rounded: 'rounded' })}>
-                        <MainMenu storagedData={dataObjState} setDataObjFunc={setDataObj} />
-                        {/* <MainMenu tabsInfo={tabInfos} /> */}
+                        <MainMenu
+                            storagedData={dataObjState}
+                            setDataObjFunc={setDataObj}
+                            panelState={panelState}
+                            dateKeyGroupState={dateKeyGroupState}
+                        />
                     </Col>
                 </Row>
             </Container>

@@ -5,3 +5,18 @@
 .panel-list-item {
 	font-size: 0.75em
 }
+
+
+.favicon {
+	width: 16px;
+	height: 16px;
+}
+
+
+.scroll-x {
+	overflow-x: scroll;
+}
+
+.scroll-y {
+	overflow-y: scroll;
+}

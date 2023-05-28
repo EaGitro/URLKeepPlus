@@ -25,7 +25,6 @@ type Props = {
     tabsInfo: TabInfoObj[];
     storagedData: StoragedData;
     setDataObjFunc: React.Dispatch<any>;
-    whichButtonState: 'SAU' | 'SA' | 'DA' | 'SAVE';
     selectedCheckBox: {
         state: Set<any>;
         setState: React.Dispatch<any>;
@@ -152,7 +151,7 @@ export default function MainPanel(props: Props) {
 
         return (
             <Container className='list-group-item list-group-item-action w-100' key={tabsInfoObj.id}>
-                <Row className='flex-nowrap w-100 m-0 p-0' >
+                <Row className='flex-nowrap w-100 m-0 p-0 h-100' >
                     <Col xs={1}>
                         <input className="form-check-input" type="checkbox"
                             value={tabsInfoObj.id}
@@ -174,8 +173,10 @@ export default function MainPanel(props: Props) {
                                 chrome.tabs.update(tabsInfoObj.id, { active: true })
                             }
                         }
+                        className={"h-100"}
                     >
-                        <div className='breakword w-100'>
+                        <div className='breakword w-100 '>
+                            <img src={tabsInfoObj.favIconUrl} className={"favicon"} />{" "}
                             {tabsInfoObj.title}
                         </div>
                         <div className='breakword w-100 text-truncate text-secondary'>

@@ -19,8 +19,7 @@ import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import { StoragedData } from '~/src/tsTypes/propsTypes';
 import { TabInfoObj } from '~/src/tsTypes/tabInfoTypes';
 import { CssStyle } from '~/src/tsTypes/styleTypes'
-import { tmp } from '~/src/tsTypes/tmp';
-import { SavedDataFormatProperties, SavedDataFormatKey, VersionDigit } from "../tsTypes/SavedDataFormat";
+import { SavedDataFormatProperties, SavedDataFormatKey, VersionDigit } from "~/src/tsTypes/SavedDataFormat";
 
 
 
@@ -197,27 +196,7 @@ export default function SubPanel(props: Props) {
             }
         }
 
-        // let dataArrForSave = props.tabsInfo.map((tabsInfoObj) => {    // [{formattedForSaveData}, {}, {}]
-        //     if (idsSetForSave.has(tabsInfoObj.id)) {
-        //         let element = formatDataForSave(            // formatted each data to save
-        //             formatDateObjForDataKey(new Date()),
-        //             shortenUrl(tabsInfoObj.url),
-        //             tabsInfoObj.title,
-        //             stateKeywordInputtedVal,
-        //             [stateGroupInputtedVal],
-        //             stateNoteInputtedVal,
-        //             {}
-        //         )
-        //         return element;
-        //     }
-        // })
 
-        // let tmpSet = new Set(dataArrForSave);
-        // if (tmpSet.has(undefined)) {
-        //     tmpSet.delete(undefined)
-        // }
-        // dataArrForSave = [...tmpSet]
-        // console.log("dataArrForSave", dataArrForSave)
         let isConfirmed = window.confirm(`Save ${Object.keys(dataObjForSave).length} items ?`)
         console.log("comfirmed", isConfirmed)
         if (isConfirmed) {
@@ -240,18 +219,12 @@ export default function SubPanel(props: Props) {
 
 
             let prevMainDataObj = props.storagedData.mainDataObj;
-            // let dataObjForSave = { ...dataArrForSave };
             let newMainDataObj = Object.assign(dataObjForSave, prevMainDataObj);
             let prevKeywordSet = new Set(props.storagedData.keywordList);
             let newKeywordSet = prevKeywordSet.add(stateKeywordInputtedVal);
             let newKeywordArr = [...newKeywordSet]
             let prevGroupObj = props.storagedData.groupObj;
             let newGroupObj = Object.assign(prevGroupObj, { [stateGroupInputtedVal]: {} })
-
-            // await setStorage_promise({ "keywordList": newKeywordArr });
-            // await setStorage_promise({ "groupObj": newGroupObj });
-            // await setStorage_promise({ "mainDataObj": newMainDataObj });
-
             props.setDataObjFunc({
                 keywordList: newKeywordArr,
                 groupObj: newGroupObj,
@@ -272,8 +245,11 @@ export default function SubPanel(props: Props) {
 
     useEffect(() => {
         const saveMainData = async () => {
-            let defPropsMaindataobjJson = JSON.stringify(props.storagedData.mainDataObj)
-            if(defPropsMaindataobjJson == "{}"){
+            // let defPropsMaindataobjJson = JSON.stringify(props.storagedData.mainDataObj)
+            // if(defPropsMaindataobjJson == "{}"){
+            //     return;
+            // }
+            if (Object.keys(props.storagedData.mainDataObj).length == 0) {
                 return;
             }
             console.log("save main data")
