@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { useRef } from 'react';
 
 import { CssStyle } from '../../tsTypes/styleTypes'
 
@@ -16,6 +17,9 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
+
 import { StoragedData } from '~/src/tsTypes/propsTypes';
 import getStorage_promise from '~/src/utilities/getStorage_promise';
 import setStorage_promise from '~/src/utilities/setStorage_promise';
@@ -113,32 +117,44 @@ export default function MainPanel(props: Props) {
 
         return (
             <Container className='list-group-item list-group-item-action w-100' key={objKey}>
-                <Row className='flex-nowrap w-100 m-0 p-0 h-100' >
-                    <Col xs={1}>
-                        <input className="form-check-input" type="checkbox"
-                            value={objKey}
-                            onChange={handleChangeCheckBox}
-                            id={objKey}
-                            checked={props.selectedCheckBox.state.has(objKey)}
-                        />
-                    </Col>
-                    <Col xs={10}
-                        onClick={
-                            () => {
-                                window.open(url, '_blank')
-                            }
-                        }
-                        className={"h-100"}
-                    >
-                        <div className='breakword w-100 '>
-                            <img src={`https://www.google.com/s2/favicons?domain_url=${new URL(url).hostname}`} className={"favicon"} />{" "}
-                            {dataObjWithTheKey[objKey]["title"]}
-                        </div>
-                        <div className='breakword w-100 text-truncate text-secondary'>
-                            {url}
-                        </div>
-                    </Col>
-                </Row>
+                <OverlayTrigger
+                    placement='top'
+                    overlay={<Tooltip id={`tooltip${objKey}`}>
+                        {`Date: ${parseDateTime(objKey.split(" ")[0])},\nKeyword: "${dataObjWithTheKey[objKey].keyword}",\nGroup: "${dataObjWithTheKey[objKey].group.join("/")}",\nNote: "${dataObjWithTheKey[objKey].note}"`}
+                    </Tooltip>}>
+                    <span>
+                        <Row className='flex-nowrap w-100 m-0 p-0 h-100' >
+                            <Col xs={1}>
+                                <input className="form-check-input" type="checkbox"
+                                    value={objKey}
+                                    onChange={handleChangeCheckBox}
+                                    id={objKey}
+                                    checked={props.selectedCheckBox.state.has(objKey)}
+                                />
+                            </Col>
+                            <Col xs={10}
+                                onClick={
+                                    () => {
+                                        window.open(url, '_blank')
+                                    }
+                                }
+                            >
+
+
+                                <div className='breakword w-100 '>
+                                    <img src={`https://www.google.com/s2/favicons?domain_url=${new URL(url).hostname}`} className={"favicon"} />{" "}
+                                    {dataObjWithTheKey[objKey]["title"]}
+                                </div>
+                                <div className='breakword w-100 text-truncate text-secondary'>
+                                    {url}
+                                </div>
+
+
+                            </Col>
+                        </Row>
+                    </span>
+
+                </OverlayTrigger>
             </Container>
 
         )
