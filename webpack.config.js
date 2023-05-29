@@ -55,7 +55,7 @@ module.exports = {
 
   },
 
-  mode: 'development',                  /* デバッグ用 */
-  devtool: 'inline-source-map',         /* ソースマップ */
+  // mode: 'development',                  /* デバッグ用 */
+  // devtool: 'inline-source-map',         /* ソースマップ */
   watch: true,                          /* 自動 bundle */
 };
