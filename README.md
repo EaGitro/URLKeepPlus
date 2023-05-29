@@ -22,6 +22,5 @@ This is a chrome extension.  This app manage tabs and URLs, and save URLs with k
 You can choose a mode. 
 
 If you select ***"Current tabs"*** , you can see what you **open this browser now** (default).   
-If you select ***"All items"*** , you can see what you have saved **categorized with date**.
-If you select ***"keywords"***, you can see keywords you saved. To click the keyword, **items saved with the keyword** are displayed.   
-If you 
+If you select ***"All items"*** , you can see what you have saved **categorized with date**.    
+If you select ***"keywords"*** or ***"Groups"*** , you can see keywords or group name you saved. To click the keyword or group name, **items saved with the keyword/group** are displayed.   
