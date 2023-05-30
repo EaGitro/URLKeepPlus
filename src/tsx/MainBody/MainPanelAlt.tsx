@@ -113,7 +113,7 @@ export default function MainPanel(props: Props) {
                 <OverlayTrigger
                     placement='top'
                     overlay={<Tooltip id={`tooltip${objKey}`}>
-                        {`Date: ${parseDateTime(objKey.split(" ")[0])},`}<br/>{`Keyword: "${dataObjWithTheKey[objKey].keyword}",`}<br/>{`Group: "${dataObjWithTheKey[objKey].group.join("/")}",`}<br/>{`\nNote: "${dataObjWithTheKey[objKey].note}"`}
+                        {`Date: ${parseDateTime(objKey.split(" ")[0])},`}<br />{`Keyword: "${dataObjWithTheKey[objKey].keyword}",`}<br />{`Group: "${dataObjWithTheKey[objKey].group.join("/")}",`}<br />{`\nNote: "${dataObjWithTheKey[objKey].note}"`}
                     </Tooltip>}>
                     <span>
                         <Row className='flex-nowrap w-100 m-0 p-0 h-100' >
@@ -159,13 +159,14 @@ export default function MainPanel(props: Props) {
 
     return (
         <>
-            <Card>
-                <Card.Title className='p-2'>
-                    {props.selectedCategory == '_all_' ? parseDateTime(props.selectedCategoricalItem) : props.selectedCategoricalItem}
-                </Card.Title>
-            </Card>
+
             <div className={objToClassname(props.cssStyle)}>
                 {/* MainPanel */}
+                <Card>
+                    <Card.Title className='p-2'>
+                        {props.selectedCategory == '_all_' ? parseDateTime(props.selectedCategoricalItem) : props.selectedCategoricalItem}
+                    </Card.Title>
+                </Card>
                 <div className={objToClassname({ width: 'w-100', height: 'h-100', list: { listGroup: 'list-group' }, margin: 'm-0', padding: 'p-0' })}>
                     {listItems}
                 </div>
