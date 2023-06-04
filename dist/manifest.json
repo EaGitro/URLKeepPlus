@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "URLKeep+",
     "version": "1.0.0.1",
-    "description": "an Extension for Google Chrome. Saving URLs and Managing, Arranging them.",
+    "description": "This is a Chrome extension, which manages tabs and URLs, and save URLs with keywords, group names, and note.",
     "permissions": [
         "storage",
         "tabs",

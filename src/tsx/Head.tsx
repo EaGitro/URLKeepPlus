@@ -29,7 +29,7 @@ export default function Head(props: Props) {
                 </Navbar.Brand>
                 <Navbar.Collapse className="me-auto justify-content-end">
                     <Navbar.Text>
-                        <Nav.Link href="https://github.com/EaGitro/URLKeepPlus/blob/main/README.md">How To Use</Nav.Link>
+                        <Nav.Link href="./howtouse.html">How To Use</Nav.Link>
                     </Navbar.Text>
                 </Navbar.Collapse>
             </Container>

@@ -62,17 +62,17 @@ export default function MainBody(props: Props) {
 
             // set default data
             if (!(Object.keys(getDefault).includes("keywordList"))) {
-                console.log("init keywordList ")
+                // console.log("init keywordList ")
                 await setStorage_promise({ "keywordList": [] })
             }
 
             if (!(Object.keys(getDefault).includes("groupObj"))) {
-                console.log("init groupObj")
+                // console.log("init groupObj")
                 await setStorage_promise({ "groupObj": {} })
             }
 
             if (!(Object.keys(getDefault).includes("mainDataObj"))) {
-                console.log("init mainDataObj");
+                // console.log("init mainDataObj");
                 await setStorage_promise({ "mainDataObj": {} })
             }
 

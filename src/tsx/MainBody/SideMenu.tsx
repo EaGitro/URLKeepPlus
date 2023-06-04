@@ -8,6 +8,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 // import { useAccordionButton } from 'react-bootstrap/AccordionButton';
 
 import { CssStyle } from '~/src/tsTypes/styleTypes';
@@ -84,7 +86,9 @@ export default function SideMenu(props: Props) {
      */
 
 
-    let keywordList = props.storagedData.keywordList.map((x) => {
+    let keywordListSet = new Set(props.storagedData.keywordList)
+    keywordListSet.delete("")
+    let keywordListItems = [...keywordListSet].map((x) => {
         return (
             <ListGroup.Item key={x}>
                 <div className='text-decoration-underline' data-panelcategory={'_keyword_'} onClick={handleClickSelectCategory}>{x}</div>
@@ -96,7 +100,9 @@ export default function SideMenu(props: Props) {
      * saved groups
      */
 
-    let groupList = Object.keys(props.storagedData.groupObj).map((x) => {
+    let groupListSet = new Set(Object.keys(props.storagedData.groupObj))
+    groupListSet.delete("")
+    let groupListItem = [...groupListSet].map((x) => {
         return (
             <ListGroup.Item key={x}>
                 <div className='text-decoration-underline' data-panelcategory={'_group_'} onClick={handleClickSelectCategory}>{x}</div>
@@ -108,12 +114,18 @@ export default function SideMenu(props: Props) {
 
         <div className={objToClassname(props.cssStyle)}>
           
-
-            <Card>
-                <Card.Header className='py-4' onClick={handleClickCurrent}>
+            <ButtonToolbar className='w-100'>
+                <ButtonGroup className='w-100'>
+                    <Button onClick={handleClickCurrent} variant="light" className='py-4 ps-3 w-100 text-start'>
                     {"Current tabs"}
+                    </Button>
+                </ButtonGroup>
+            </ButtonToolbar>
+            {/* <Card>
+                <Card.Header className='py-4' onClick={handleClickCurrent}>
+                    <a href='#'>{"Current tabs"}</a>
                 </Card.Header>
-            </Card>
+            </Card> */}
 
             <Accordion className='w-100'>
                 <Accordion.Item eventKey="0">
@@ -136,7 +148,7 @@ export default function SideMenu(props: Props) {
                     </Accordion.Header>
                     <Accordion.Body>
                         <ListGroup variant="flush">
-                            {keywordList}
+                            {keywordListItems}
                         </ListGroup>
                     </Accordion.Body>
                 </Accordion.Item>
@@ -144,7 +156,7 @@ export default function SideMenu(props: Props) {
                     <Accordion.Header>Groups</Accordion.Header>
                     <Accordion.Body>
                         <ListGroup variant="flush">
-                            {groupList}
+                            {groupListItem}
                         </ListGroup>
                     </Accordion.Body>
                 </Accordion.Item>

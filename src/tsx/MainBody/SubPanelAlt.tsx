@@ -56,19 +56,19 @@ export default function SubPanel(props: Props) {
      */
 
 
-    let savedGroupsItems = props.storagedData.groupObj;
-    let savedKeywordsItems = props.storagedData.keywordList;
 
-    // if (savedKeywordsItems.length == 0) {
-    //     // console.log("null keywords")
-    // }
-    // if (Object.keys(savedGroupsItems).length == 0) {
-    //     // console.log("null groups")
-    //     // savedGroupsItems = [null];
-    // }
+    let savedKeywordsItemsSet = new Set(props.storagedData.keywordList);
+    let savedGroupsItemsSet = new Set(Object.keys(props.storagedData.groupObj));
+
+    /**
+     * delete "" if contained
+     */
+
+    savedKeywordsItemsSet.delete("");
+    savedGroupsItemsSet.delete("");
 
 
-    let savedKeywordsItemsElements = savedKeywordsItems.map((x) => {
+    let savedKeywordsItemsElements = [...savedKeywordsItemsSet].map((x) => {
         function itemOnclick() {
             // console.log("savedKeywords clicked")
             setStateKeyword(x);
@@ -81,7 +81,7 @@ export default function SubPanel(props: Props) {
 
     // console.log("savedKeywordsItems mapped", savedKeywordsItems)
 
-    let savedGroupsItemsElements = Object.keys(savedGroupsItems).map((x) => {
+    let savedGroupsItemsElements = [...savedGroupsItemsSet].map((x) => {
         function itemOnclick() {
             // console.log("savedGroups clicked");
             setStateGroup(x);
@@ -257,7 +257,7 @@ export default function SubPanel(props: Props) {
         let isConfirmed = window.confirm(`Rerite setting of ${Object.keys(dataObjForSave).length} items ?`)
         // console.log("comfirmed", isConfirmed)
         if (isConfirmed) {
-            console.log("conf")
+            // console.log("conf")
             let msg = `${Object.keys(dataObjForSave).length} items\n`;
             if (!(props.storagedData.keywordList.includes(stateKeywordInputtedVal)) && (!(stateKeywordInputtedVal == ""))) {
                 msg += `new keyword \"${stateKeywordInputtedVal}\"\n`
@@ -280,6 +280,19 @@ export default function SubPanel(props: Props) {
             let newKeywordArr = [...newKeywordSet]
             let prevGroupObj = props.storagedData.groupObj;
             let newGroupObj = Object.assign(prevGroupObj, { [stateGroupInputtedVal]: {} })
+            // let keywordSetToSave = new Set(props.storagedData.keywordList);
+            // if(stateKeywordInputtedVal){
+            //     keywordSetToSave.add(stateKeywordInputtedVal);
+            // }
+            // let newKeywordArr = [...keywordSetToSave]
+
+            // let groupObjToSave = structuredClone(props.storagedData.groupObj);
+            // let newGroupObj = groupObjToSave;
+            // if(stateGroupInputtedVal){
+            //     newGroupObj = Object.assign(groupObjToSave, { [stateGroupInputtedVal]: {} })
+            // }
+
+
             props.setDataObjFunc({
                 keywordList: newKeywordArr,
                 groupObj: newGroupObj,
@@ -322,7 +335,7 @@ export default function SubPanel(props: Props) {
                 return;
             }
 
-            console.log("save main data");
+            // console.log("save main data");
             await setStorage_promise({ "keywordList": props.storagedData.keywordList });
             await setStorage_promise({ "groupObj": props.storagedData.groupObj });
             await setStorage_promise({ "mainDataObj": props.storagedData.mainDataObj });

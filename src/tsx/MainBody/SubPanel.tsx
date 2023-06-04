@@ -56,20 +56,17 @@ export default function SubPanel(props: Props) {
      * make <li> list children of `savedKeywordsItems` and `savedGroupsItems`
      */
 
+    let savedKeywordsItemsSet = new Set(props.storagedData.keywordList);
+    let savedGroupsItemsSet = new Set(Object.keys(props.storagedData.groupObj));
 
-    let savedGroupsItems = props.storagedData.groupObj;
-    let savedKeywordsItems = props.storagedData.keywordList;
+    /**
+     * delete "" if contained
+     */
 
-    // if (savedKeywordsItems.length == 0) {
-    //     console.log("null keywords")
-    // }
-    // if (Object.keys(savedGroupsItems).length == 0) {
-    //     console.log("null groups")
-    //     // savedGroupsItems = [null];
-    // }
+    savedKeywordsItemsSet.delete("");
+    savedGroupsItemsSet.delete("");
 
-
-    let savedKeywordsItemsElements = savedKeywordsItems.map((x) => {
+    let savedKeywordsItemsElements = [...savedKeywordsItemsSet].map((x) => {
         function itemOnclick() {
             // console.log("savedKeywords clicked")
             setStateKeyword(x);
@@ -82,7 +79,7 @@ export default function SubPanel(props: Props) {
 
     // console.log("savedKeywordsItems mapped", savedKeywordsItems)
 
-    let savedGroupsItemsElements = Object.keys(savedGroupsItems).map((x) => {
+    let savedGroupsItemsElements = [...savedGroupsItemsSet].map((x) => {
         function itemOnclick() {
             // console.log("savedGroups clicked");
             setStateGroup(x);
@@ -215,6 +212,18 @@ export default function SubPanel(props: Props) {
              * save main data
              */
 
+            // let prevMainDataObj = props.storagedData.mainDataObj;
+            // let newMainDataObj = Object.assign(dataObjForSave, prevMainDataObj);
+            // let keywordSetToSave = new Set(props.storagedData.keywordList);
+            // if(stateKeywordInputtedVal){
+            //     keywordSetToSave.add(stateKeywordInputtedVal);
+            // }
+            // let newKeywordArr = [...keywordSetToSave]
+            // let groupObjToSave = structuredClone(props.storagedData.groupObj);
+            // let newGroupObj = groupObjToSave;
+            // if(stateGroupInputtedVal){
+            //     newGroupObj = Object.assign(groupObjToSave, { [stateGroupInputtedVal]: {} })
+            // }
 
 
             let prevMainDataObj = props.storagedData.mainDataObj;
