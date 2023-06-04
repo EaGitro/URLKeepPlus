@@ -1,6 +1,13 @@
 <!-- title: How To Use URLKeep+ -->
 
+
+
+
 ![icon](./dist/icon/icon.png)
+<BR>
+
+**日本語版は [こちら](./README_jp.md)**
+<BR>
 
 # URLKeep+
 
