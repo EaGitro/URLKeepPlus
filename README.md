@@ -24,6 +24,15 @@ Latest version is available at [`./dist`](/dist/) dir.
 * Open current tabs or saved items. 
 
 
+# Languages, Frameworks
+* TypeScript 
+* React (v.18)
+* Bootstrap (v5.0)
+* React-Bootstrap
+* Babel
+* Webpack
+
+
 
 # Usage
 
