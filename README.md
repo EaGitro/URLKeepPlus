@@ -18,7 +18,7 @@ This is a chrome extension.  This app manage tabs and URLs, and save URLs with k
 
 # How to get this app
 
-Stable version is available at [Chrome Web Store]().
+Stable version is available at [Chrome Web Store](https://chrome.google.com/webstore/detail/urlkeep%2B/mhjmgbgkkpikgohjidjgipahbnehkdkd).
 
 Latest version is available at [`./dist`](/dist/) dir. 
 

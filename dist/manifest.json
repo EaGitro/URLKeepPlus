@@ -5,8 +5,7 @@
     "description": "This is a Chrome extension, which manages tabs and URLs, and save URLs with keywords, group names, and note.",
     "permissions": [
         "storage",
-        "tabs",
-        "scripting"
+        "tabs"
     ],
     "background": {
         "service_worker": "background.js"

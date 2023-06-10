@@ -9,7 +9,7 @@ Chrome から提供されている API を用いてタブ情報の取得を行�
 
 GitHub: [https://github.com/EaGitro/URLKeepPlus](https://github.com/EaGitro/URLKeepPlus)
 
-Google Web Store (審査中): [https://chrome.google.com/webstore/detail/URLKeep+/mhjmgbgkkpikgohjidjgipahbnehkdkd](https://chrome.google.com/webstore/detail/URLKeep+/mhjmgbgkkpikgohjidjgipahbnehkdkd)
+Google Web Store : [https://chrome.google.com/webstore/detail/urlkeep%2B/mhjmgbgkkpikgohjidjgipahbnehkdkd](https://chrome.google.com/webstore/detail/urlkeep%2B/mhjmgbgkkpikgohjidjgipahbnehkdkd)
 
 
 # 使用技術
