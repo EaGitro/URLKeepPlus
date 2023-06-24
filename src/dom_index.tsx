@@ -7,6 +7,7 @@ import Supervisor from '~/src/tsx/Supervisor';
 
 // About CSS style and types, see  ~/src/tsTypes/styleTypes or ~/dist/style/
 
+
 function clickEvent() {
     console.log("clicked");
 }
